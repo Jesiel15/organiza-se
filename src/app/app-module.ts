@@ -14,9 +14,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
-import { LoginModule } from "./pages/login/login-module";
+import { LoginModule } from './pages/login/login-module';
 import { Login } from './pages/login/login';
 import { HttpClientModule } from '@angular/common/http';
+import { Home } from './pages/home/home';
+import { HomeModule } from './pages/home/home-module';
 
 @NgModule({
   declarations: [App],
@@ -28,13 +30,14 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     //Pages
     LoginModule,
+    HomeModule,
     //PrimeNG
     CardModule,
     ButtonModule,
     InputTextModule,
     PasswordModule,
     CheckboxModule,
-],
+  ],
   providers: [
     provideAnimationsAsync(),
     providePrimeNG({
