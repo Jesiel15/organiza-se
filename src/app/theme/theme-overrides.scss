@@ -1,27 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
-@import url("https://fonts.googleapis.com/css2?family=Red+Rose:wght@300;400;700&display=swap");
-body {
-  font-family: "Red Rose", sans-serif;
-}
-
 :root {
   // === Brand Colours ===
-  --color-red: #e0533d;
-  --color-purple: #9da7d0;
-  --color-green: #469b88;
-  --color-blue: #377cc8;
+  --color-brand-red: #e0533d;
+  --color-brand-purple: #9da7d0;
+  --color-brand-green: #469b88;
+  --color-brand-blue: #377cc8;
 
-  --color-pink: #e78c9d;
-  --color-lilac: #d9d8f7;
-  --color-neon-green: #16df7f;
-  --color-sky-blue: #2881e4;
+  --color-brand-pink: #e78c9d;
+  --color-brand-lilac: #d9d8f7;
+  --color-brand-neon-green: #16df7f;
+  --color-brand-sky-blue: #2881e4;
 
   // === Base Colours ===
   --color-white: #ffffff;
   --color-black: #242424;
   --color-yellow: #eed868;
   --color-gray: #848484;
-  --color-background: #bdd4ed;
 
   // === Aura Theme Overrides ===
   --aura-primary: var(--color-brand-blue); // Cor principal do tema

@@ -1,0 +1,62 @@
+<div class="login-container">
+  <div class="left">
+    <h2>Bem-vindo!</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <input
+          pInputText
+          type="email"
+          placeholder="email@email.com"
+          formControlName="email"
+        />
+      </div>
+
+      <div class="field">
+        <p-password
+          class="custom-password"
+          formControlName="password"
+          [feedback]="false"
+          toggleMask="true"
+          placeholder="Senha"
+        ></p-password>
+      </div>
+
+      <div class="options">
+        <div>
+          <p-checkbox
+            formControlName="remember"
+            binary="true"
+            inputId="remember"
+          ></p-checkbox>
+          <label for="remember">Lembre-me</label>
+        </div>
+
+        <p class="register-link">
+          <a class="forgot" href="#">Esqueceu a senha?</a>
+        </p>
+      </div>
+
+      <button pButton type="submit" label="Entrar" class="btn-login"></button>
+
+      <button
+        pButton
+        type="button"
+        label="Sign google"
+        class="p-button-outlined google-btn"
+      ></button>
+    </form>
+
+    <p class="register-link">
+      Não tem uma conta?
+      <a href="#">Cadastre-se</a>
+    </p>
+
+    <div *ngIf="showError" class="error-message">{{ showError }}</div>
+  </div>
+
+  <div class="right">
+    <h2>Organiza-se</h2>
+    <img src="assets/img/logo.png" alt="Logo" width="150" />
+  </div>
+</div>

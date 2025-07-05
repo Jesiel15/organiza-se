@@ -1,0 +1,155 @@
+.login-container {
+  display: flex;
+  height: 100vh;
+
+  .left,
+  .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .left {
+    padding: 1rem;
+
+    h2 {
+      font-weight: bold;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    .field {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 1rem;
+
+      /* Estilo do campo padrão */
+      input.p-inputtext {
+        width: 100%;
+        max-width: 300px;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border-radius: 6px;
+        border: 1px solid var(--color-border, #444);
+        background-color: transparent;
+        color: var(--color-white);
+        box-sizing: border-box;
+        transition: border 0.2s ease;
+      }
+
+      /* Estilo ao focar o input */
+      input.p-inputtext:focus {
+        border: 1px solid var(--color-sky-blue) !important;
+        outline: none;
+      }
+
+      /* Estilo do campo de senha */
+      .custom-password .p-password-input {
+        width: 100% !important;
+        max-width: 300px;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border-radius: 6px;
+        border: 1px solid var(--color-border, #444);
+        background-color: transparent;
+        color: var(--color-white);
+        box-sizing: border-box;
+        transition: border 0.2s ease;
+      }
+
+      /* Borda ao focar o campo de senha */
+      .custom-password.p-focus .p-password-input {
+        border-color: var(--color-sky-blue) !important;
+      }
+
+      /* Remove o painel de força */
+      .custom-password .p-password-panel {
+        display: none !important;
+      }
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      // gap: 1rem;
+      align-items: center;
+      width: 100%;
+      max-width: 300px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+
+      /* Estilizar o checkbox PrimeNG com base nas classes aplicadas dinamicamente */
+      // Lembrar de adicionar - encapsulation: ViewEncapsulation.None no .ts para modificar o ::ng do prime
+      .p-checkbox {
+        margin-right: 1rem;
+
+        .p-checkbox-box {
+          border: 1px solid var(--color-sky-blue) !important; // cor da borda padrão
+          background-color: transparent !important;
+          border-radius: 4px;
+          transition: all 0.2s ease;
+        }
+
+        &.p-checkbox-checked.p-highlight .p-checkbox-box {
+          background-color: var(
+            --color-sky-blue
+          ) !important; // cor de fundo quando marcado
+          border-color: var(--color-sky-blue) !important;
+        }
+
+        &.p-checkbox-checked.p-highlight .p-checkbox-icon {
+          color: black !important; // cor do check
+        }
+      }
+    }
+
+    .btn-login {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 1rem;
+      background-color: var(--color-sky-blue);
+      border-color: var(--color-sky-blue);
+      border-color: var(--color-sky-blue);
+      color: var(--color-white);
+    }
+
+    .google-btn {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 1rem;
+      border-color: var(--color-sky-blue);
+      color: var(--color-sky-blue);
+    }
+
+    .register-link {
+      font-size: 0.9rem;
+
+      a {
+        color: var(--color-sky-blue);
+        text-decoration: none;
+        font-weight: bold;
+      }
+    }
+
+    .error-message {
+      color: var(--color-red);
+      margin-top: 1rem;
+    }
+  }
+
+  .right {
+    background-color: var(--color-background);
+
+    h2 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: var(--color-black);
+    }
+
+    img {
+      filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
+    }
+  }
+}
