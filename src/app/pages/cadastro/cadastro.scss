@@ -12,6 +12,7 @@
   }
 
   .left {
+    order: 2;
     padding: 1rem;
 
     h2 {
@@ -139,6 +140,7 @@
   }
 
   .right {
+    order: 1;
     background-color: var(--color-background);
 
     h2 {
