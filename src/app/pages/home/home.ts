@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+// src/app/home/home.component.ts
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,38 +8,22 @@ import { Router } from '@angular/router';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {
-  constructor(private http: HttpClient, private router: Router) {}
+export class Home implements OnInit {
+  currentUser: any; // Ou defina uma interface mais específica para o usuário
+
+  constructor(private authService: AuthService) {} // Injete o serviço
+
+  ngOnInit() {
+    this.currentUser = this.authService.getLoggedInUser();
+    if (this.currentUser) {
+      console.log('Usuário logado:', this.currentUser.name);
+      // Você pode usar this.currentUser no seu template agora
+    } else {
+      console.log('Nenhum usuário logado ou token inválido.');
+    }
+  }
 
   logout() {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      this.http
-        .post(
-          'http://localhost:3000/api/auth/logout',
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .subscribe({
-          next: () => {
-            localStorage.removeItem('token'); // remove o token
-            this.router.navigate(['/login']); // redireciona para a tela de login
-          },
-          error: (err) => {
-            console.error('Erro ao fazer logout:', err);
-            // Mesmo com erro, remove o token localmente por segurança
-            localStorage.removeItem('token');
-            this.router.navigate(['/login']);
-          },
-        });
-    } else {
-      // Se não tem token, apenas navega para login
-      this.router.navigate(['/login']);
-    }
+    this.authService.logout();
   }
 }
