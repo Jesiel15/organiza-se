@@ -15,11 +15,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
 import { LoginModule } from './pages/login/login-module';
-import { Login } from './pages/login/login';
 import { HttpClientModule } from '@angular/common/http';
-import { Home } from './pages/home/home';
 import { HomeModule } from './pages/home/home-module';
-
+import { DividerModule } from 'primeng/divider';
+import { GraficoModule } from './pages/graficos/grafico-module';
+import { RouterModule, Routes } from '@angular/router';
+import { Grafico } from './pages/graficos/grafico';
+const routes: Routes = [
+  { path: '', component: Grafico } // Default route for /graficos
+];
 @NgModule({
   declarations: [App],
   imports: [
@@ -28,15 +32,18 @@ import { HomeModule } from './pages/home/home-module';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
+    RouterModule.forChild(routes),
     //Pages
     LoginModule,
     HomeModule,
+    GraficoModule,
     //PrimeNG
     CardModule,
     ButtonModule,
     InputTextModule,
     PasswordModule,
     CheckboxModule,
+    DividerModule,
   ],
   providers: [
     provideAnimationsAsync(),

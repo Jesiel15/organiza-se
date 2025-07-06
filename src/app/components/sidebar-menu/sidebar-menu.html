@@ -1,0 +1,20 @@
+<div class="sidebar-container">
+  <div class="logo">
+    <div class="logo-square"></div>
+    <span>Gestor Financeiro</span>
+  </div>
+  <p-divider></p-divider>
+  <nav>
+    <ul>
+      <li *ngFor="let item of menuItems" [class]="item.class || 'menu-item'" (click)="item.route === '/login' ? sair() : navegar(item.route)">
+        <i [class]="item.icon"></i>
+        <span>{{ item.label }}</span>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="suporte">
+    <i class="pi pi-phone"></i>
+    <span>Suporte</span>
+  </div>
+</div>

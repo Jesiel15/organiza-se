@@ -1,0 +1,125 @@
+.sidebar-container {
+  width: 300px; /* Keeping the fixed width, image shows a fixed width sidebar */
+  background-color: white;
+  height: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+  // justify-content: space-between;
+  // border-radius: 6px;
+  // padding: 3rem; /* REMOVE OR REDUCE THIS PADDING */
+  padding-top: 1.5rem; /* Only apply top/bottom padding to the container itself */
+  padding-bottom: 1.5rem; /* Match the vertical spacing from your original 3rem */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  // margin: 1rem;
+  // border: 1px solid #e0e0e0;
+}
+
+.sidebar-container .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  // padding-bottom: 1rem; /* This padding can be moved or adjusted */
+  // border-bottom: 1px solid #e0e0e0; /* This border will now stretch correctly */
+  padding-left: 1.5rem; /* Add horizontal padding to the logo section */
+  padding-right: 1.5rem;
+  padding-bottom: 1rem; /* Keep existing bottom padding for spacing to divider */
+}
+
+.sidebar-container .logo .logo-square {
+  width: 36px;
+  height: 36px;
+  background-color: #3b82f6;
+  border-radius: 6px;
+}
+
+.sidebar-container .logo span {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #333;
+}
+
+/* PrimeNG Divider Specific Styles */
+// :host ::ng-deep .p-divider {
+//   .p-divider-content {
+//     display: none; /* Hide any content if you don't want text in the divider */
+//   }
+//   .p-divider-solid.p-divider-horizontal:before {
+//     border-top: 1px solid #e0e0e0; /* Match your desired border color */
+//     margin-left: 1.5rem; /* Add left margin to the divider line */
+//     margin-right: 1.5rem; /* Add right margin to the divider line */
+//   }
+// }
+
+.sidebar-container nav {
+  flex-grow: 1;
+}
+
+.sidebar-container nav ul {
+  list-style: none;
+  padding: 0; /* Keep padding 0 here to control it on the li */
+  margin: 1.5rem 0;
+}
+
+.sidebar-container nav ul .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 1.5rem; /* Apply horizontal padding here */
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #555;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar-container nav ul .menu-item i {
+  font-size: 1.25rem;
+  color: #555;
+}
+
+.sidebar-container nav ul .menu-item:hover {
+  background-color: #e0f2fe;
+  color: #1a73e8;
+}
+
+.sidebar-container nav ul .menu-item:hover i {
+  color: #1a73e8;
+}
+
+.sidebar-container nav ul .sair {
+  margin-top: 20px;
+  color: #ef4444;
+}
+
+.sidebar-container nav ul .sair i {
+  color: #ef4444;
+}
+
+.sidebar-container nav ul .sair:hover {
+  background-color: #fecaca;
+  color: #b91c1c;
+}
+
+.sidebar-container nav ul .sair:hover i {
+  color: #b91c1c;
+}
+
+.sidebar-container .suporte {
+  font-weight: 500;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  cursor: default;
+  padding-top: 1rem;
+  padding-left: 1.5rem; /* Add horizontal padding here */
+  padding-right: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.sidebar-container .suporte i {
+  font-size: 1.2rem;
+  color: #555;
+}

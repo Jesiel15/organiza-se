@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { Login } from './pages/login/login';
 import { AuthGuard } from './auth.guard'; // Importe seu guarda de rota
+import { Grafico } from './pages/graficos/grafico';
 
 const routes: Routes = [
   { path: 'login', component: Login },
@@ -10,6 +11,11 @@ const routes: Routes = [
     path: 'home',
     component: Home,
     canActivate: [AuthGuard], // Adicione o guarda aqui!
+  },
+  {
+    path: 'graficos',
+    component: Grafico,
+    canActivate: [AuthGuard],
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' },

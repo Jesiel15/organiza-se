@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Home } from './home';
+import { Grafico } from './grafico';
 import { SidebarMenuModule } from '../../components/sidebar-menu/sidebar-menu-module';
 
 @NgModule({
-  declarations: [Home],
+  declarations: [Grafico],
   imports: [CommonModule, SidebarMenuModule],
-  exports: [Home],
+  exports: [Grafico],
 })
-export class HomeModule {}
+export class GraficoModule {}
