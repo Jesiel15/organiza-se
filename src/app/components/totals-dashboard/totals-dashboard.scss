@@ -1,0 +1,31 @@
+.container-total {
+  display: flex;
+  gap: 2rem;
+  padding-top: 2rem;
+}
+
+p-card {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  width: 14rem;
+  height: 7rem;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.despesas {
+  margin-top: 0.5rem;
+  color: var(--color-red);
+  font-size: 24px;
+}
+
+.receitas {
+  margin-top: 0.5rem;
+  color: var(--color-sky-blue);
+  font-size: 24px;
+}
+
+.saldo {
+  margin-top: 0.5rem;
+  color: var(--color-neon-green);
+  font-size: 24px;
+}

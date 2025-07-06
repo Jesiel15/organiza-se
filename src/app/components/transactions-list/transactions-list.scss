@@ -1,0 +1,32 @@
+.container-depesas-receitas {
+  display: flex;
+  gap: 2rem;
+  padding-top: 2rem;
+}
+
+p-card {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  width: 36rem;
+  height: 36rem;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-dashed-button {
+  display: flex;
+  width: 90%;
+  background-color: #f0f0f0 !important;
+  color: #333 !important;
+  border: 2px dashed #999 !important;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-shadow: none !important;
+  padding: 0.5rem;
+  margin: 0 auto;
+}
+
+.custom-dashed-button:hover {
+  background-color: #f0f0f0 !important;
+  border-color: #999 !important;
+  color: #333 !important;
+}
