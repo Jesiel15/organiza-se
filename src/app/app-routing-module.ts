@@ -6,6 +6,8 @@ import { Login } from './pages/login/login';
 import { Cadastro } from './pages/cadastro/cadastro';
 import { Home } from './pages/home/home';
 import { AuthGuard } from './auth.guard';
+import { AdicionarDespesas } from './pages/adicionar-despesas/adicionar-despesas';
+import { AdicionarReceitas } from './pages/adicionar-receitas/adicionar-receitas';
 
 const routes: Routes = [
   {
@@ -26,6 +28,16 @@ const routes: Routes = [
   {
     path: 'graficos',
     component: Grafico,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'add-despesa',
+    component: AdicionarDespesas,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'add-receita',
+    component: AdicionarReceitas,
     canActivate: [AuthGuard],
   },
   // Se você tiver outras rotas, adicione-as aqui com 'data: { animation: "Nome" }'
