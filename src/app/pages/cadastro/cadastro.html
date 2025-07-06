@@ -60,7 +60,7 @@
 
     <p class="register-link">
       Já tem uma conta?
-      <a href="#">Faça o login</a>
+      <a (click)="goToLogin()">Faça o login</a>
     </p>
 
     <div *ngIf="showError" class="error-message">{{ showError }}</div>

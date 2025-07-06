@@ -69,6 +69,10 @@ export class Cadastro {
       : { passwordMismatch: true };
   };
 
+  goToLogin() {
+    this.router.navigate(['/login']); // navega para a home
+  }
+
   onSubmit() {
     this.showError = '';
 

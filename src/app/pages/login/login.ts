@@ -25,6 +25,10 @@ export class Login {
     });
   }
 
+  goToCadastro() {
+    this.router.navigate(['/cadastro']); // navega para a home
+  }
+
   onSubmit() {
     if (this.loginForm.invalid) return;
 

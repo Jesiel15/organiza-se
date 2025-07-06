@@ -49,9 +49,9 @@
 
     <p class="register-link">
       Não tem uma conta?
-      <a href="cadastro">Cadastre-se</a>
+      <a (click)="goToCadastro()">Cadastre-se</a>
     </p>
-
+    
     <div *ngIf="showError" class="error-message">{{ showError }}</div>
   </div>
 

@@ -1,0 +1,17 @@
+/* app.scss */
+:host {
+  display: block; // Garante que o host se comporta como um bloco para o layout
+  overflow: hidden; // Esconde o conteúdo que está fora da área visível durante a transição
+  height: 100vh; // Define a altura total da viewport
+  width: 100vw; // Define a largura total da viewport
+}
+
+// Estilos para os componentes que estão entrando/saindo durante a transição
+// Estes estilos são importantes para que ':enter' e ':leave' funcionem com position: absolute
+router-outlet + * {
+  // Ajuste se sua estrutura HTML for diferente
+  display: block; // Garante que o componente seja um bloco
+  height: 100%; // Ocupa a altura total do seu host
+  width: 100%; // Ocupa a largura total do seu host
+  overflow: auto; // Adiciona scroll se o conteúdo for maior que a tela
+}
