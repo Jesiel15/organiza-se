@@ -1,0 +1,73 @@
+<div class="cadastro-container">
+  <div class="left">
+    <h2>Cadastre-se!</h2>
+
+    <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <input
+          pInputText
+          type="text"
+          placeholder="Digite seu nome e sobrenome"
+          formControlName="name"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          pInputText
+          type="email"
+          placeholder="Digite seu email"
+          formControlName="email"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          pInputText
+          type="email"
+          placeholder="Confirme seu email"
+          formControlName="confirmEmail"
+        />
+      </div>
+
+      <div class="field">
+        <p-password
+          class="custom-password"
+          formControlName="password"
+          toggleMask="true"
+          placeholder="Digite sua senha"
+          [(ngModel)]="valueSenha"
+        ></p-password>
+      </div>
+
+      <div class="field">
+        <p-password
+          class="custom-password"
+          formControlName="confirmPassword"
+          toggleMask="true"
+          placeholder="Confirme sua senha"
+          [(ngModel)]="valueConfirmarSenha"
+        ></p-password>
+      </div>
+
+      <button
+        pButton
+        type="submit"
+        label="Entrar"
+        class="btn-cadastro"
+      ></button>
+    </form>
+
+    <p class="register-link">
+      Já tem uma conta?
+      <a href="#">Faça o login</a>
+    </p>
+
+    <div *ngIf="showError" class="error-message">{{ showError }}</div>
+  </div>
+
+  <div class="right">
+    <h2>Organiza-se</h2>
+    <img src="assets/img/logo.png" alt="Logo" width="150" />
+  </div>
+</div>

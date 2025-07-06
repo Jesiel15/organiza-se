@@ -21,8 +21,9 @@ import { DividerModule } from 'primeng/divider';
 import { GraficoModule } from './pages/graficos/grafico-module';
 import { RouterModule, Routes } from '@angular/router';
 import { Grafico } from './pages/graficos/grafico';
+import { CadastroModule } from './pages/cadastro/cadastro-module';
 const routes: Routes = [
-  { path: '', component: Grafico } // Default route for /graficos
+  { path: '', component: Grafico }, // Default route for /graficos
 ];
 @NgModule({
   declarations: [App],
@@ -35,6 +36,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     //Pages
     LoginModule,
+    CadastroModule,
     HomeModule,
     GraficoModule,
     //PrimeNG

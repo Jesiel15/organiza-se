@@ -4,9 +4,11 @@ import { Home } from './pages/home/home';
 import { Login } from './pages/login/login';
 import { AuthGuard } from './auth.guard'; // Importe seu guarda de rota
 import { Grafico } from './pages/graficos/grafico';
+import { Cadastro } from './pages/cadastro/cadastro';
 
 const routes: Routes = [
   { path: 'login', component: Login },
+  { path: 'cadastro', component: Cadastro },
   {
     path: 'home',
     component: Home,
