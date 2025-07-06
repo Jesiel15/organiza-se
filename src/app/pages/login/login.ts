@@ -36,7 +36,7 @@ export class Login {
       .post<any>('http://localhost:3000/api/auth/login', this.loginForm.value)
       .subscribe({
         next: (res) => {
-          alert('Login realizado com sucesso!');
+          // alert('Login realizado com sucesso!');
           localStorage.setItem('token', res.token);
           this.router.navigate(['/home']); // navega para a home
         },

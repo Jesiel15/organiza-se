@@ -94,7 +94,7 @@ export class Cadastro {
       )
       .subscribe({
         next: (res) => {
-          alert('Cadastro realizado com sucesso!');
+          // alert('Cadastro realizado com sucesso!');
           localStorage.setItem('token', res.token);
           this.router.navigate(['/home']);
         },

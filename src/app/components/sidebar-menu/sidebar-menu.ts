@@ -13,14 +13,14 @@ export class SidebarMenu {
   menuItems: { label: string; icon: string; route: string; class?: string }[] =
     [
       { label: 'Início', icon: 'pi pi-home', route: '/home' },
-      { label: 'Gráficos', icon: 'pi pi-chart-bar', route: '/graficos' }, // This route will now work
+      { label: 'Gráficos', icon: 'pi pi-chart-bar', route: '/graficos' },
       { label: 'Calendário', icon: 'pi pi-calendar', route: '/calendario' },
       { label: 'Configurações', icon: 'pi pi-cog', route: '/configuracoes' },
       {
         label: 'Sair',
         icon: 'pi pi-exclamation-triangle',
         route: '/login',
-        class: 'sair',
+        class: 'menu-item sair'
       },
     ];
 

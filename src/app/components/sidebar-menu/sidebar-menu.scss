@@ -34,7 +34,7 @@
 
 .sidebar-container .logo span {
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: var(--color-black);
 }
 
@@ -56,7 +56,8 @@
 
 .sidebar-container nav ul {
   list-style: none;
-  padding: 0; /* Keep padding 0 here to control it on the li */
+  padding: 0;
+  padding-left: 1rem;
   margin: 1.5rem 0;
 }
 
@@ -64,45 +65,44 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 1.5rem; /* Apply horizontal padding here */
+  padding: 10px 1.5rem;
   cursor: pointer;
   border-radius: 6px;
   font-weight: 500;
-  font-size: 0.95rem;
-  color: #555;
+  font-size: 1.2rem;
+  color: var(--color-black);
   transition: background-color 0.2s, color 0.2s;
 }
 
 .sidebar-container nav ul .menu-item i {
   font-size: 1.25rem;
-  color: #555;
+  color: var(--color-black);
 }
 
 .sidebar-container nav ul .menu-item:hover {
   background-color: #e0f2fe;
-  color: #1a73e8;
+  color: var(--color-sky-blue);
 }
 
 .sidebar-container nav ul .menu-item:hover i {
-  color: #1a73e8;
+  color: var(--color-sky-blue);
 }
 
 .sidebar-container nav ul .sair {
-  margin-top: 20px;
-  color: #ef4444;
+  color: var(--color-red);
 }
 
 .sidebar-container nav ul .sair i {
-  color: #ef4444;
+  color: var(--color-red);
 }
 
 .sidebar-container nav ul .sair:hover {
   background-color: #fecaca;
-  color: #b91c1c;
+  color: var(--color-red);
 }
 
 .sidebar-container nav ul .sair:hover i {
-  color: #b91c1c;
+  color: var(--color-red);
 }
 
 .sidebar-container .suporte {
@@ -114,7 +114,7 @@
   font-size: 0.9rem;
   cursor: default;
   padding-top: 1rem;
-  padding-left: 1.5rem; /* Add horizontal padding here */
+  padding-left: 1.5rem;
   padding-right: 1.5rem;
   border-top: 1px solid #e0e0e0;
 }
