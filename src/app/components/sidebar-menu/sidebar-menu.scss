@@ -1,6 +1,6 @@
 .sidebar-container {
   width: 300px; /* Keeping the fixed width, image shows a fixed width sidebar */
-  background-color: white;
+  background-color: var(--color-white);
   height: calc(100vh - 2rem);
   display: flex;
   flex-direction: column;
@@ -28,14 +28,14 @@
 .sidebar-container .logo .logo-square {
   width: 36px;
   height: 36px;
-  background-color: #3b82f6;
+  background-color: var(--color-sky-blue);
   border-radius: 6px;
 }
 
 .sidebar-container .logo span {
   font-weight: 600;
-  font-size: 1.05rem;
-  color: #333;
+  font-size: 1.5rem;
+  color: var(--color-black);
 }
 
 /* PrimeNG Divider Specific Styles */
