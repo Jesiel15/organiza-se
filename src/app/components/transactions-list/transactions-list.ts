@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { TransactionsService } from '../../service/transactions.service';
 
 @Component({
   selector: 'app-transactions-list',
@@ -12,7 +13,11 @@ export class TransactionsList implements OnInit {
   expenses: Expense[] = [];
   revenues: Revenue[] = [];
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private transactionsService: TransactionsService
+  ) {}
 
   ngOnInit(): void {
     this.fetchExpenses();
@@ -38,8 +43,13 @@ export class TransactionsList implements OnInit {
           console.warn(data);
           this.expenses = data.map((exp) => ({
             ...exp,
-            dateExpense: new Date(exp.dateExpense), // garantir conversão para Date
+            dateExpense: new Date(exp.dateExpense),
           }));
+          const total = this.expenses.reduce(
+            (acc, exp) => acc + exp.valueExpense,
+            0
+          );
+          this.transactionsService.setTotalExpenses(total);
         },
         error: (err) => {
           console.error('Erro ao buscar despesas:', err);
@@ -68,6 +78,11 @@ export class TransactionsList implements OnInit {
             ...exp,
             dateRevenue: new Date(exp.dateRevenue),
           }));
+          const total = this.revenues.reduce(
+            (acc, rev) => acc + rev.valueRevenue,
+            0
+          );
+          this.transactionsService.setTotalRevenues(total);
         },
         error: (err) => {
           console.error('Erro ao buscar receitas:', err);

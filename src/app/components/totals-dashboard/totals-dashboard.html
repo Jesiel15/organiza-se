@@ -1,13 +1,15 @@
 <div class="container-total">
   <p-card header="Total despesas">
-    <p class="despesas">R$ valor</p>
+    <p class="despesas">R$ {{ formattedTotalExpenses }}</p>
   </p-card>
 
   <p-card header="Total receitas">
-    <p class="receitas">R$ valor</p>
+    <p class="receitas">R$ {{ totalRevenues | number : "1.2-2" }}</p>
   </p-card>
 
   <p-card header="Saldo">
-    <p class="saldo">R$ valor</p>
+    <p [ngClass]="{ positivo: saldo >= 0, negativo: saldo < 0 }">
+      R$ {{ saldo | number : "1.2-2" }}
+    </p>
   </p-card>
 </div>
