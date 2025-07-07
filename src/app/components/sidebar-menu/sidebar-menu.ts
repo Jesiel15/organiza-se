@@ -25,6 +25,7 @@ export class SidebarMenu {
     ];
 
   sair() {
+    localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 

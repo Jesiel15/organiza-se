@@ -41,6 +41,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.getItem('token'); // deve retornar null
     this.router.navigate(['/login']);
   }
 }

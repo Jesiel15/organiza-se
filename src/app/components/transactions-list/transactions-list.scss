@@ -8,8 +8,9 @@ p-card {
   background-color: var(--color-white);
   color: var(--color-black);
   width: 36rem;
-  height: 36rem;
+  height: auto;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
 }
 
 .custom-dashed-button {
@@ -22,7 +23,7 @@ p-card {
   font-size: 1rem;
   box-shadow: none !important;
   padding: 0.5rem;
-  margin: 0 auto;
+  margin: 0 auto 1.5rem auto;
 }
 
 .custom-dashed-button:hover {
@@ -34,4 +35,52 @@ p-card {
 h1 {
   color: var(--color-black);
   margin-bottom: 1rem;
+}
+
+.expenses-list {
+  margin-top: 1rem;
+}
+
+.expense-item {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.expense-item:last-child {
+  border-bottom: none;
+}
+
+.expense-icon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  color: var(--color-black);
+}
+
+.expense-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.expense-name {
+  font-weight: bold;
+  color: var(--color-black);
+}
+
+.expense-date {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.expense-amount {
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--color-black);
+  text-align: right;
+}
+
+.expense-amount.negative {
+  color: #e53935;
 }

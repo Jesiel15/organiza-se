@@ -1,7 +1,7 @@
 // app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Grafico } from './pages/graficos/grafico'; // Para a rota padrão
+import { Grafico } from './pages/graficos/grafico';
 import { Login } from './pages/login/login';
 import { Cadastro } from './pages/cadastro/cadastro';
 import { Home } from './pages/home/home';
@@ -11,19 +11,19 @@ import { AdicionarReceitas } from './pages/adicionar-receitas/adicionar-receitas
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: '',
     component: Login,
-    data: { animation: 'Login' }, // Identificador para a animação de Login
+    data: { animation: 'Login' },
   },
   {
     path: 'cadastro',
     component: Cadastro,
-    data: { animation: 'Cadastro' }, // Identificador para a animação de Cadastro
+    data: { animation: 'Cadastro' },
   },
   {
     path: 'home',
     component: Home,
-    canActivate: [AuthGuard], // Adicione o guarda aqui!
+    canActivate: [AuthGuard],
   },
   {
     path: 'graficos',
@@ -40,12 +40,15 @@ const routes: Routes = [
     component: AdicionarReceitas,
     canActivate: [AuthGuard],
   },
-  // Se você tiver outras rotas, adicione-as aqui com 'data: { animation: "Nome" }'
-  // { path: '**', redirectTo: '/login' }, // Exemplo de rota curinga
+  // Rota curinga para redirecionar URLs desconhecidas para login (opcional)
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)], // Use forRoot para o módulo de rotas raiz
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

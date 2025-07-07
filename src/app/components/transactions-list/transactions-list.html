@@ -1,6 +1,6 @@
 <div class="container-depesas-receitas">
   <div>
-    <h1>Depesas</h1>
+    <h1>Despesas</h1>
     <p-card>
       <button
         pButton
@@ -8,9 +8,23 @@
         label="Adicionar despesa"
         class="p-button-secondary custom-dashed-button"
         (click)="goToAddDespesa()"
+      ></button>
 
-      ></button
-    ></p-card>
+      <div class="expenses-list">
+        <div class="expense-item" *ngFor="let expense of expenses">
+          <div class="expense-icon">
+            <i class="pi pi-chart-bar"></i>
+          </div>
+          <div class="expense-details">
+            <span class="expense-name">{{ expense.name }}</span>
+            <span class="expense-date">{{ expense.date | date: 'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="expense-amount" [ngClass]="{'negative': expense.amount < 0}">
+            R$ {{ expense.amount | number: '1.2-2' }}
+          </div>
+        </div>
+      </div>
+    </p-card>
   </div>
 
   <div>

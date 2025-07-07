@@ -11,8 +11,7 @@ import { AuthService } from '../../service/auth.service';
 export class Home implements OnInit {
   currentUser: any; // Ou defina uma interface mais específica para o usuário
 
-  constructor(private authService: AuthService) {} // Injete o serviço
-
+  constructor(private authService: AuthService) {}
   ngOnInit() {
     this.currentUser = this.authService.getLoggedInUser();
     if (this.currentUser) {
@@ -21,9 +20,5 @@ export class Home implements OnInit {
     } else {
       console.log('Nenhum usuário logado ou token inválido.');
     }
-  }
-
-  logout() {
-    this.authService.logout();
   }
 }

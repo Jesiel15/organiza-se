@@ -33,7 +33,7 @@ export class Login {
     if (this.loginForm.invalid) return;
 
     this.http
-      .post<any>('http://localhost:3000/api/auth/login', this.loginForm.value)
+      .post<any>('http://localhost:3000/login', this.loginForm.value)
       .subscribe({
         next: (res) => {
           // alert('Login realizado com sucesso!');

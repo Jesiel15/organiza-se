@@ -88,10 +88,7 @@ export class Cadastro {
     }
 
     this.http
-      .post<any>(
-        'http://localhost:3000/api/auth/register',
-        this.cadastroForm.value
-      )
+      .post<any>('http://localhost:3000/register', this.cadastroForm.value)
       .subscribe({
         next: (res) => {
           // alert('Cadastro realizado com sucesso!');
