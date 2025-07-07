@@ -55,9 +55,15 @@ h1 {
 }
 
 .expense-icon {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-right: 1rem;
   color: var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 30%;
 }
 
 .expense-details {
@@ -105,9 +111,15 @@ h1 {
 }
 
 .revenue-icon {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-right: 1rem;
   color: var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 30%;
 }
 
 .revenue-details {

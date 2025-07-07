@@ -12,7 +12,10 @@
 
       <div class="expenses-list">
         <div class="expense-item" *ngFor="let expense of expenses">
-          <div class="expense-icon">
+          <div
+            class="expense-icon"
+            [ngStyle]="{ 'background-color': expense.color }"
+          >
             <i class="{{ expense.icon }}"></i>
           </div>
           <div class="expense-details">
@@ -45,7 +48,10 @@
 
       <div class="revenues-list">
         <div class="revenue-item" *ngFor="let revenue of revenues">
-          <div class="revenue-icon">
+          <div
+            class="revenue-icon"
+            [ngStyle]="{ 'background-color': revenue.color }"
+          >
             <i class="{{ revenue.icon }}"></i>
           </div>
           <div class="revenue-details">
