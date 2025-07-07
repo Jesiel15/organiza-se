@@ -8,7 +8,7 @@
 >
   <div class="icon-grid">
     <div
-      *ngFor="let icon of primeNgIcons"
+      *ngFor="let icon of filteredPrimeNgIcons"
       class="icon-item"
       (click)="selectIcon(icon)"
     >
@@ -20,7 +20,7 @@
     <button
       (click)="cancelSelection()"
       pButton
-      type="submit"
+      type="button"
       label="Cancelar"
       class="btn-cadastro"
     ></button>
