@@ -10,3 +10,42 @@
     min-height: 80vh;
   }
 }
+
+h1 {
+  color: var(--color-black);
+}
+
+.field {
+  display: flex;
+  align-items: center; // Alinha verticalmente o botão e o input
+}
+
+.icon-button {
+  background-color: #ccccff; // Cor de fundo azul claro/lavanda
+  border: none;
+  border-radius: 4px; // Borda arredondada
+  padding: 8px; // Espaçamento interno
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease; // Transição suave para o hover
+
+  &:hover {
+    background-color: #a0a0e0; // Cor um pouco mais escura no hover
+  }
+
+  .pi {
+    font-size: 24px; // Tamanho do ícone
+    color: black; // Cor do ícone
+  }
+}
+
+input[pInputText] {
+  margin-left: 8px; // Espaçamento entre o botão e o input
+  // Adicione outros estilos de input aqui se precisar
+}
+
+input[pInputText] {
+  margin-left: 8px;
+}

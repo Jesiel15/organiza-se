@@ -1,0 +1,28 @@
+<p-dialog
+  header="Selecionar Ícone"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="icon-grid">
+    <div
+      *ngFor="let icon of primeNgIcons"
+      class="icon-item"
+      (click)="selectIcon(icon)"
+    >
+      <i [class]="'pi ' + icon"></i>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button
+      (click)="cancelSelection()"
+      pButton
+      type="submit"
+      label="Cancelar"
+      class="btn-cadastro"
+    ></button>
+  </ng-template>
+</p-dialog>

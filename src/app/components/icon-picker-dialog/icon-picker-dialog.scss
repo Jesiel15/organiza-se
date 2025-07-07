@@ -1,0 +1,61 @@
+body {
+  background-color: var(--color-white);
+}
+
+::ng-deep .p-dialog {
+  background-color: var(--color-var); // fundo do container principal
+  // border: 2px solid #f44336; // borda vermelha (opcional)
+  color: var(--color-white);
+}
+
+::ng-deep .p-dialog .p-dialog-header {
+  background-color: var(--color-white); // cabeçalho branco
+  color: var(--color-sky-blue);
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  background-color: var(--color-white); // fundo do conteúdo
+  color: var(--color-sky-blue);
+}
+
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 10px;
+  justify-items: center;
+  padding: 10px;
+  max-height: 400px; /* Limita a altura e adiciona scroll */
+  overflow-y: auto;
+  background-color: var(--color-white);
+  color: var(--color-sky-blue);
+}
+
+.icon-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border: 1px solid var(--color-sky-blue);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.icon-item:hover {
+  background-color: var(--color-sky-blue);
+}
+
+.icon-item i {
+  font-size: 28px; /* Aumenta o tamanho do ícone */
+  color: var(-color-white);
+}
+
+.btn-cadastro {
+  width: 100%;
+  max-width: 200px;
+  background-color: var(--color-red);
+  border-color: var(--color-red);
+  border-color: var(--color-red);
+  color: var(--color-white);
+}

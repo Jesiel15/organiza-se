@@ -2,6 +2,78 @@
   <app-sidebar-menu></app-sidebar-menu>
 
   <div class="content">
-    
+    <h1>Adicionar despesa</h1>
+    <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <button type="button" class="icon-button" (click)="openIconPicker()">
+          <i
+            [class]="
+              'pi ' + expenseForm.get('icon')?.value || 'pi pi-credit-card'
+            "
+          ></i>
+        </button>
+        <input
+          pInputText
+          type="text"
+          placeholder="Cor"
+          formControlName="color"
+          readonly
+        />
+      </div>
+
+      <app-icon-picker-dialog
+        (iconSelected)="onIconSelected($event)"
+      ></app-icon-picker-dialog>
+
+      <div class="field">
+        <input
+          pInputText
+          type="text"
+          placeholder="Cor"
+          formControlName="color"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          pInputText
+          type="text"
+          placeholder="Nome da Despesa"
+          formControlName="nameExpense"
+        />
+      </div>
+
+      <!-- <div class="field">
+        <p-inputNumber
+          [(ngModel)]="valor"
+          name="valor"
+          inputId="br-currency"
+          mode="currency"
+          currency="BRL"
+          locale="pt-BR"
+        >
+        </p-inputNumber>
+      </div> -->
+
+      <div class="field">
+        <input pInputText type="date" formControlName="dateExpense" />
+      </div>
+
+      <div class="field">
+        <textarea
+          pInputTextarea
+          placeholder="Anotação"
+          formControlName="anotation"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <button
+        pButton
+        type="submit"
+        label="Salvar"
+        class="btn-cadastro"
+      ></button>
+    </form>
   </div>
 </div>
