@@ -84,3 +84,51 @@ h1 {
 .expense-amount.negative {
   color: #e53935;
 }
+
+.revenues-list {
+  margin-top: 1rem;
+}
+
+.revenue-item {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.revenue-item:last-child {
+  border-bottom: none;
+}
+
+.revenue-icon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  color: var(--color-black);
+}
+
+.revenue-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.revenue-name {
+  font-weight: bold;
+  color: var(--color-black);
+}
+
+.revenue-date {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.revenue-amount {
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--color-black);
+  text-align: right;
+}
+
+.revenue-amount.negative {
+  color: #e53935;
+}

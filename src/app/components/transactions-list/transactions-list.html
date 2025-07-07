@@ -13,14 +13,19 @@
       <div class="expenses-list">
         <div class="expense-item" *ngFor="let expense of expenses">
           <div class="expense-icon">
-            <i class="pi pi-chart-bar"></i>
+            <i class="{{ expense.icon }}"></i>
           </div>
           <div class="expense-details">
-            <span class="expense-name">{{ expense.name }}</span>
-            <span class="expense-date">{{ expense.date | date: 'dd/MM/yyyy' }}</span>
+            <span class="expense-name">{{ expense.nameExpense }}</span>
+            <span class="expense-date">{{
+              expense.dateExpense | date : "dd/MM/yyyy"
+            }}</span>
           </div>
-          <div class="expense-amount" [ngClass]="{'negative': expense.amount < 0}">
-            R$ {{ expense.amount | number: '1.2-2' }}
+          <div
+            class="expense-amount"
+            [ngClass]="{ negative: expense.valueExpense < 0 }"
+          >
+            R$ {{ expense.valueExpense | number : "1.2-2" }}
           </div>
         </div>
       </div>
@@ -37,6 +42,26 @@
         class="p-button-secondary custom-dashed-button"
         (click)="goToAddReceita()"
       ></button>
+
+      <div class="revenues-list">
+        <div class="revenue-item" *ngFor="let revenue of revenues">
+          <div class="revenue-icon">
+            <i class="{{ revenue.icon }}"></i>
+          </div>
+          <div class="revenue-details">
+            <span class="revenue-name">{{ revenue.nameRevenue }}</span>
+            <span class="revenue-date">{{
+              revenue.dateRevenue | date : "dd/MM/yyyy"
+            }}</span>
+          </div>
+          <div
+            class="revenue-amount"
+            [ngClass]="{ negative: revenue.valueRevenue < 0 }"
+          >
+            R$ {{ revenue.valueRevenue | number : "1.2-2" }}
+          </div>
+        </div>
+      </div>
     </p-card>
   </div>
 </div>

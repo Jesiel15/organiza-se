@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-transactions-list',
@@ -9,20 +10,69 @@ import { Router } from '@angular/router';
 })
 export class TransactionsList implements OnInit {
   expenses: Expense[] = [];
+  revenues: Revenue[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.expenses = [
-      { name: 'Contas', date: new Date('2025-07-20'), amount: -2000.0 },
-      { name: 'Contas contas', date: new Date('2025-07-20'), amount: -298.0 },
-      { name: 'Outras Contas', date: new Date('2025-07-20'), amount: -20.0 },
-      {
-        name: 'Contas Diversas',
-        date: new Date('2025-07-20'),
-        amount: -20000.0,
-      },
-    ];
+    this.fetchExpenses();
+    this.fetchRevenues();
+  }
+
+  fetchExpenses() {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.warn('Token não encontrado.');
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    this.http
+      .get<Expense[]>('http://localhost:3000/expenses', { headers })
+      .subscribe({
+        next: (data) => {
+          console.warn(data);
+          this.expenses = data.map((exp) => ({
+            ...exp,
+            dateExpense: new Date(exp.dateExpense), // garantir conversão para Date
+          }));
+        },
+        error: (err) => {
+          console.error('Erro ao buscar despesas:', err);
+        },
+      });
+  }
+
+  fetchRevenues() {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.warn('Token não encontrado.');
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    this.http
+      .get<Revenue[]>('http://localhost:3000/revenues', { headers })
+      .subscribe({
+        next: (data) => {
+          console.warn(data);
+          this.revenues = data.map((exp) => ({
+            ...exp,
+            dateRevenue: new Date(exp.dateRevenue),
+          }));
+        },
+        error: (err) => {
+          console.error('Erro ao buscar receitas:', err);
+        },
+      });
   }
 
   goToAddDespesa() {
