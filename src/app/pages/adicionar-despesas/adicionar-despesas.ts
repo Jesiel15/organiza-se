@@ -22,7 +22,7 @@ export class AdicionarDespesas {
     private router: Router
   ) {
     this.expenseForm = this.fb.group({
-      icon: ['', Validators.required],
+      icon: ['pi pi-credit-card', Validators.required],
       color: ['', [Validators.required]],
       nameExpense: ['', [Validators.required]],
       valueExpense: ['', Validators.required],
@@ -47,4 +47,18 @@ export class AdicionarDespesas {
   }
 
   onSubmit() {}
+
+  getIconColor(hexColor: string | null | undefined): string {
+    if (!hexColor) {
+      return 'black'; // Cor padrão se nenhuma cor for selecionada
+    }
+
+    // Função simples para determinar se a cor é clara ou escura
+    // para escolher a cor do texto (preto ou branco)
+    const r = parseInt(hexColor.substring(1, 3), 16);
+    const g = parseInt(hexColor.substring(3, 5), 16);
+    const b = parseInt(hexColor.substring(5, 7), 16);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness > 155 ? 'black' : 'white'; // 155 é um bom limite, ajuste conforme necessário
+  }
 }

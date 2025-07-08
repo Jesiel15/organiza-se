@@ -22,6 +22,7 @@ import { GraficoModule } from './pages/graficos/grafico-module';
 import { RouterModule, Routes } from '@angular/router'; // RouterModule já importado
 import { Grafico } from './pages/graficos/grafico'; // Se 'Grafico' for um componente para a rota padrão
 import { CadastroModule } from './pages/cadastro/cadastro-module';
+import { ColorPickerModule } from 'primeng/colorpicker';
 
 // As rotas deveriam estar no app-routing.module.ts.
 // Para propósitos de demonstração, se fosse aqui, estaria assim:
@@ -53,6 +54,7 @@ const routes: Routes = [
     PasswordModule,
     CheckboxModule,
     DividerModule,
+    ColorPickerModule,
   ],
   providers: [
     provideAnimationsAsync(), // Isso já habilita o suporte a animações

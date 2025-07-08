@@ -5,20 +5,17 @@
     <h1>Adicionar despesa</h1>
     <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
       <div class="field">
-        <button type="button" class="icon-button" (click)="openIconPicker()">
-          <i
-            [class]="
-              'pi ' + expenseForm.get('icon')?.value || 'pi pi-credit-card'
-            "
-          ></i>
+        <h3 class="selecione-icone">Selecione o ícone:</h3>
+        <button
+          type="button"
+          class="icon-button"
+          (click)="openIconPicker()"
+          [style.background-color]="expenseForm.get('color')?.value || 'red'"
+        >
+          <i [class]="'pi ' + expenseForm.get('icon')?.value"></i>
         </button>
-        <input
-          pInputText
-          type="text"
-          placeholder="Cor"
-          formControlName="color"
-          readonly
-        />
+        <h3 class="selecione-cor">Selecione a cor:</h3>
+        <p-colorPicker formControlName="color"></p-colorPicker>
       </div>
 
       <app-icon-picker-dialog
@@ -29,31 +26,10 @@
         <input
           pInputText
           type="text"
-          placeholder="Cor"
-          formControlName="color"
-        />
-      </div>
-
-      <div class="field">
-        <input
-          pInputText
-          type="text"
           placeholder="Nome da Despesa"
           formControlName="nameExpense"
         />
       </div>
-
-      <!-- <div class="field">
-        <p-inputNumber
-          [(ngModel)]="valor"
-          name="valor"
-          inputId="br-currency"
-          mode="currency"
-          currency="BRL"
-          locale="pt-BR"
-        >
-        </p-inputNumber>
-      </div> -->
 
       <div class="field">
         <input pInputText type="date" formControlName="dateExpense" />

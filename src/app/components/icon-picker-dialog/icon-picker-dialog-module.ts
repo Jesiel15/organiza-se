@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { IconPickerDialog } from './icon-picker-dialog';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { ColorPickerModule } from 'primeng/colorpicker';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [IconPickerDialog],
-  imports: [CommonModule, DialogModule, ButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, DialogModule, ButtonModule],
   exports: [IconPickerDialog],
 })
 export class IconPickerDialogModule {}
