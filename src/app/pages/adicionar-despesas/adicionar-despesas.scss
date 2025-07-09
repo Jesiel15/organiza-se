@@ -25,13 +25,18 @@ h1 {
 }
 
 .selecione-cor {
-  margin-left: 1rem;
+  margin-left: 3rem;
   margin-right: 1rem;
+}
+
+.div-icones{
+  display: flex;
+  justify-content: space-between;
 }
 
 .field {
   display: flex;
-  width: 32%;
+  width: 50%;
   align-items: center;
   margin-bottom: 15px;
 }
@@ -83,7 +88,7 @@ textarea[pInputTextarea],
   width: 100%;
   max-width: 300px;
   margin-bottom: 1rem;
-  background-color: var( --color-neon-green);
-  border-color: var( --color-neon-green);
+  background-color: var(--color-neon-green);
+  border-color: var(--color-neon-green);
   color: var(--color-white);
 }
