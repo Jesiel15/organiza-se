@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconPickerDialogModule } from '../../components/icon-picker-dialog/icon-picker-dialog-module';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [AdicionarDespesas],
@@ -19,6 +20,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
     InputTextModule,
     PasswordModule,
     ColorPickerModule,
+    ButtonModule,
   ],
   exports: [AdicionarDespesas],
 })

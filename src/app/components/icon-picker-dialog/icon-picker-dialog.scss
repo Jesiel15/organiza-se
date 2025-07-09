@@ -3,18 +3,18 @@ body {
 }
 
 ::ng-deep .p-dialog {
-  background-color: var(--color-var); // fundo do container principal
+  background-color: var(--color-var);
   // border: 2px solid #f44336; // borda vermelha (opcional)
   color: var(--color-white);
 }
 
 ::ng-deep .p-dialog .p-dialog-header {
-  background-color: var(--color-white); // cabeçalho branco
+  background-color: var(--color-white);
   color: var(--color-sky-blue);
 }
 
 ::ng-deep .p-dialog .p-dialog-content {
-  background-color: var(--color-white); // fundo do conteúdo
+  background-color: var(--color-white);
   color: var(--color-sky-blue);
 }
 
@@ -24,7 +24,7 @@ body {
   gap: 10px;
   justify-items: center;
   padding: 10px;
-  max-height: 400px; /* Limita a altura e adiciona scroll */
+  max-height: 400px;
   overflow-y: auto;
   background-color: var(--color-white);
   color: var(--color-sky-blue);
@@ -48,7 +48,7 @@ body {
 }
 
 .icon-item i {
-  font-size: 28px; /* Aumenta o tamanho do ícone */
+  font-size: 28px;
   color: var(-color-white);
 }
 

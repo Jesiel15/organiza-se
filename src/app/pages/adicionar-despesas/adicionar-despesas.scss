@@ -31,34 +31,33 @@ h1 {
 
 .field {
   display: flex;
-  align-items: center; // Alinha verticalmente o botão e o input
-  margin-bottom: 15px; // Adicionado para espaçamento entre os campos
+  width: 32%;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .icon-button {
-  // background-color: #ccccff; // REMOVA OU COMENTE ESTA LINHA, POIS SERÁ CONTROLADA PELO ANGULAR
   border: none;
-  border-radius: 4px; // Borda arredondada
-  padding: 8px; // Espaçamento interno
+  border-radius: 4px;
+  padding: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: background-color 0.3s ease; // Transição suave para o hover
-  width: 40px; // Garante que o botão tenha uma largura fixa (ajuste conforme necessário)
-  height: 40px; // Garante que o botão tenha uma altura fixa
+  transition: background-color 0.3s ease;
+  width: 40px;
+  height: 40px;
 
   // &:hover {
   //   background-color: #a0a0e0; // Cor um pouco mais escura no hover (isso ainda funcionará bem)
   // }
 
   .pi {
-    font-size: 24px; // Tamanho do ícone
-    color: black; // Cor do ícone (considere mudar para branco se a cor de fundo for escura)
+    font-size: 24px;
+    color: black;
   }
 }
 
-/* Restante do seu SCSS para inputs e colorpicker-panel */
 input[pInputText],
 textarea[pInputTextarea],
 .p-colorpicker-trigger {
@@ -71,6 +70,7 @@ textarea[pInputTextarea],
   color: #495057;
   background-color: #ffffff;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin-left: 0;
 
   &:focus {
     border-color: var(--primary-color, #6366f1);
@@ -79,4 +79,11 @@ textarea[pInputTextarea],
   }
 }
 
-/* ... Estilos do p-colorpicker-panel e seus elementos internos ... */
+.btn-adicionar {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 1rem;
+  background-color: var( --color-neon-green);
+  border-color: var( --color-neon-green);
+  color: var(--color-white);
+}

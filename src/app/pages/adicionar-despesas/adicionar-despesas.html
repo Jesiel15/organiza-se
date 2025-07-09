@@ -10,7 +10,9 @@
           type="button"
           class="icon-button"
           (click)="openIconPicker()"
-          [style.background-color]="expenseForm.get('color')?.value || 'red'"
+          [style.background-color]="
+            expenseForm.get('color')?.value || '#ff0000'
+          "
         >
           <i [class]="'pi ' + expenseForm.get('icon')?.value"></i>
         </button>
@@ -47,8 +49,8 @@
       <button
         pButton
         type="submit"
-        label="Salvar"
-        class="btn-cadastro"
+        label="Adicionar despesa"
+        class="btn-adicionar"
       ></button>
     </form>
   </div>

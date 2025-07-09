@@ -46,7 +46,9 @@ export class AdicionarDespesas {
     this.expenseForm.get('icon')?.setValue(icon); // Update the form control with the selected icon
   }
 
-  onSubmit() {}
+  onSubmit() {
+    console.log(this.expenseForm?.value);
+  }
 
   getIconColor(hexColor: string | null | undefined): string {
     if (!hexColor) {
