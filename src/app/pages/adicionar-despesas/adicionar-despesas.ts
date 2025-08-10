@@ -34,7 +34,7 @@ export class AdicionarDespesas {
       nameExpense: ['', [Validators.required]],
       valueExpense: ['', Validators.required],
       dateExpense: ['', Validators.required],
-      anotation: ['', Validators.required],
+      anotation: [''],
     });
   }
 
