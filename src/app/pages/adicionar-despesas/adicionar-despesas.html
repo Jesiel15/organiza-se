@@ -34,7 +34,23 @@
       </div>
 
       <div class="field">
-        <input pInputText type="date" formControlName="dateExpense" />
+        <input
+          pInputText
+          type="text"
+          placeholder="Valor da despesa"
+          formControlName="valueExpense"
+          (keyup)="formatCurrency($event.target)"
+          (blur)="formatCurrency($event.target)"
+        />
+      </div>
+
+      <div class="field">
+        <p-datepicker
+          formControlName="dateExpense"
+          placeholder="Selecione a data"
+          dateFormat="dd/mm/yy"
+        >
+        </p-datepicker>
       </div>
 
       <div class="field">

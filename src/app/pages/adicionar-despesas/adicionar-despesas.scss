@@ -29,7 +29,7 @@ h1 {
   margin-right: 1rem;
 }
 
-.div-icones{
+.div-icones {
   display: flex;
   justify-content: space-between;
 }
@@ -91,4 +91,116 @@ textarea[pInputTextarea],
   background-color: var(--color-neon-green);
   border-color: var(--color-neon-green);
   color: var(--color-white);
+}
+
+::ng-deep {
+  .p-inputtext {
+    flex-grow: 1;
+    padding: 0.75rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #495057;
+    // background-color: #ffffff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-left: 0;
+
+    &:focus {
+      border-color: var(--primary-color, #6366f1) !important;
+      box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25) !important;
+      outline: 0 none;
+    }
+  }
+
+  .p-datepicker {
+    background-color: var(--color-background-home, #ffffff) !important;
+    // border: 1px solid #ced4da !important;
+    // border-radius: 6px !important;
+    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: var(--color-black, #000000) !important;
+
+    span {
+      color: var(--color-black, #000000) !important;
+    }
+
+    button {
+      color: var(--color-black, #000000) !important;
+    }
+
+    div {
+      color: var(--color-background-home, #ffffff) !important;
+      background-color: var(--color-background-home, #ffffff) !important;
+      border-color: var(--primary-color, #6366f1) !important;
+    }
+
+    .p-datepicker-header {
+      background-color: var(--color-background-home, #ffffff) !important;
+      border-bottom: 1px solid #ced4da !important;
+      color: var(--color-black, #000000) !important;
+
+      .p-datepicker-title,
+      .p-datepicker-prev,
+      .p-datepicker-next {
+        color: var(--color-black, #000000) !important;
+      }
+    }
+
+    .p-datepicker-calendar-container,
+    .p-datepicker-calendar {
+      background-color: var(--color-background-home, #df1f1f) !important;
+      color: var(--color-black, #000000) !important;
+    }
+
+    .p-datepicker-calendar {
+      td {
+        span {
+          color: var(--color-black, #000000) !important;
+          background-color: transparent !important;
+        }
+
+        &.p-datepicker-today {
+          span {
+            background-color: var(--color-neon-green) !important;
+            color: var(--color-black, #000000) !important;
+          }
+        }
+
+        &.p-highlight {
+          span {
+            background-color: var(--primary-color, #6366f1) !important;
+            color: var(--color-white, #04b9f0) !important;
+          }
+        }
+
+        &.p-datepicker-weekday {
+          span {
+            background-color: var(--color-neon-green) !important;
+            color: var(--color-black, #000000) !important;
+          }
+        }
+      }
+    }
+
+    .p-datepicker-input {
+      flex-grow: 1;
+      padding: 0.75rem 0.75rem;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: #495057;
+      background-color: #ffffff;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      margin-left: 0;
+
+      &:focus {
+        border-color: var(--primary-color, #6366f1);
+        box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+        outline: 0 none;
+      }
+    }
+
+    input {
+      border: 0px;
+    }
+  }
 }
