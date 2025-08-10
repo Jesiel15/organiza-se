@@ -1,5 +1,73 @@
 <div class="container">
   <app-sidebar-menu></app-sidebar-menu>
 
-  <div class="content"></div>
+  <div class="content">
+    <h1>Adicionar receitas/salários</h1>
+    <form [formGroup]="revenuesForm" (ngSubmit)="onSubmit()">
+      <div class="field div-icones">
+        <h3 class="selecione-icone">Selecione o ícone:</h3>
+        <button
+          type="button"
+          class="icon-button"
+          (click)="openIconPicker()"
+          [style.background-color]="
+            revenuesForm.get('color')?.value || '#ff0000'
+          "
+        >
+          <i [class]="'pi ' + revenuesForm.get('icon')?.value"></i>
+        </button>
+        <h3 class="selecione-cor">Selecione a cor:</h3>
+        <p-colorPicker formControlName="color"></p-colorPicker>
+      </div>
+
+      <app-icon-picker-dialog
+        (iconSelected)="onIconSelected($event)"
+      ></app-icon-picker-dialog>
+
+      <div class="field">
+        <input
+          pInputText
+          type="text"
+          placeholder="Nome da receita"
+          formControlName="nameRevenue"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          pInputText
+          type="text"
+          placeholder="Valor da receita"
+          formControlName="valueRevenue"
+          (keyup)="formatCurrency($event.target)"
+          (blur)="formatCurrency($event.target)"
+        />
+      </div>
+
+      <div class="field">
+        <p-datepicker
+          formControlName="dateRevenue"
+          placeholder="Selecione a data"
+          dateFormat="dd/mm/yy"
+        >
+        </p-datepicker>
+      </div>
+
+      <div class="field">
+        <textarea
+          pInputTextarea
+          placeholder="Anotação"
+          formControlName="anotation"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <button
+        pButton
+        type="submit"
+        label="Adicionar receita"
+        class="btn-adicionar"
+      ></button>
+    </form>
+  </div>
 </div>

@@ -1,11 +1,134 @@
-import { Component } from '@angular/core';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { IconPickerDialog } from '../../components/icon-picker-dialog/icon-picker-dialog';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-adicionar-receitas',
   standalone: false,
   templateUrl: './adicionar-receitas.html',
-  styleUrl: './adicionar-receitas.scss'
+  styleUrl: './adicionar-receitas.scss',
 })
 export class AdicionarReceitas {
+  revenuesForm: FormGroup;
 
+  @ViewChild(IconPickerDialog)
+  iconPickerDialog!: IconPickerDialog;
+
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {
+    this.revenuesForm = this.fb.group({
+      icon: ['pi pi-credit-card'],
+      color: ['#ff0000'],
+      nameRevenue: ['', [Validators.required]],
+      valueRevenue: ['', Validators.required],
+      dateRevenue: ['', Validators.required],
+      anotation: [''],
+    });
+  }
+
+  openIconPicker() {
+    this.iconPickerDialog.show();
+  }
+
+  onIconSelected(icon: string) {
+    this.revenuesForm.get('icon')?.setValue('pi ' + icon);
+  }
+
+  onSubmit() {
+    if (this.revenuesForm.valid) {
+      this.saveRenenue();
+    } else {
+      console.error('O formulário não é válido.');
+    }
+  }
+
+  getIconColor(hexColor: string | null | undefined): string {
+    if (!hexColor) {
+      return 'black';
+    }
+
+    const r = parseInt(hexColor.substring(1, 3), 16);
+    const g = parseInt(hexColor.substring(3, 5), 16);
+    const b = parseInt(hexColor.substring(5, 7), 16);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness > 155 ? 'black' : 'white';
+  }
+
+  private saveRenenue() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error(
+        'Token de autenticação não encontrado. Redirecionando para o login.'
+      );
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+
+    const newRevenue = this.revenuesForm.value;
+
+    this.http
+      .post('http://localhost:3000/revenues', newRevenue, { headers })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Erro ao adicionar receita:', error);
+          if (error.status === 401 || error.status === 403) {
+            console.warn(
+              'Sessão expirada ou token inválido. Redirecionando para o login.'
+            );
+            localStorage.removeItem('token');
+            this.router.navigate(['/login']);
+          }
+          return throwError(() => new Error('Erro ao salvar receita'));
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          console.log('Receita adicionada com sucesso!', response);
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error(
+            'Falha na requisição. Verifique o console para mais detalhes.'
+          );
+        },
+      });
+  }
+
+  formatCurrency(inputElement: any) {
+    let value = inputElement.value;
+
+    value = value.replace(/[^0-9]/g, '');
+
+    let numericValue = parseInt(value, 10) / 100;
+    if (isNaN(numericValue)) {
+      numericValue = 0;
+    }
+
+    this.revenuesForm
+      .get('valueRevenue')
+      ?.setValue(numericValue, { emitEvent: false });
+
+    const formattedValue = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+    }).format(numericValue);
+
+    inputElement.value = formattedValue;
+  }
 }
