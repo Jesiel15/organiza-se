@@ -18,7 +18,8 @@ import { throwError } from 'rxjs';
 })
 export class EditarReceitas implements OnInit {
   revenueForm: FormGroup;
-  revenueId: string | null = null; // Propriedade para armazenar o ID
+  revenueId: string | null = null;
+  monthYear: string | null = null;
 
   @ViewChild(IconPickerDialog)
   iconPickerDialog!: IconPickerDialog;
@@ -40,11 +41,16 @@ export class EditarReceitas implements OnInit {
   }
 
   ngOnInit(): void {
-    this.revenueId = this.route.snapshot.paramMap.get('id');
-    if (this.revenueId) {
+    // Captura os dois parâmetros da rota
+    this.monthYear = this.route.snapshot.paramMap.get('monthYear');
+    this.revenueId = this.route.snapshot.paramMap.get('revenueId');
+
+    if (this.monthYear && this.revenueId) {
       this.loadRevenueData();
     } else {
-      console.error('ID da receita não encontrado na rota.');
+      console.error(
+        'Parâmetros de rota (monthYear ou revenueId) não encontrados.'
+      );
       this.router.navigate(['/home']);
     }
   }
@@ -61,54 +67,39 @@ export class EditarReceitas implements OnInit {
       Authorization: `Bearer ${token}`,
     });
 
+    // Usa monthYear e revenueId na URL
     this.http
-      .get(`http://localhost:3000/revenues/${this.revenueId}`, { headers })
+      .get(
+        `http://localhost:3000/revenues/${this.monthYear}/${this.revenueId}`,
+        { headers }
+      )
       .pipe(
         take(1),
         catchError((error: HttpErrorResponse) => {
-          console.error('Erro ao carregar receita:', error);
-          if (error.status === 401 || error.status === 403) {
+          console.error('Erro ao carregar receitas:', error);
+          if (error.status === 404) {
+            this.router.navigate(['/home']);
+          } else if (error.status === 401 || error.status === 403) {
             localStorage.removeItem('token');
             this.router.navigate(['/login']);
           }
-          return throwError(() => new Error('Erro ao carregar receita'));
+          return throwError(() => new Error('Erro ao carregar receitas'));
         })
       )
       .subscribe({
         next: (revenue: any) => {
-          // A API provavelmente retorna a data como string, convertemos para objeto Date
           revenue.dateRevenue = new Date(revenue.dateRevenue);
-
-          // Popula o formulário com os dados carregados
           this.revenueForm.patchValue(revenue);
-
-          // Formata o valor monetário no input após o carregamento
-          const valueInput = document.querySelector(
-            'input[formControlName="valueRevenue"]'
-          ) as HTMLInputElement;
-          if (valueInput) {
-            valueInput.value = new Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-              minimumFractionDigits: 2,
-            }).format(revenue.valueRevenue);
-          }
-        },
-        error: (err) => {
-          console.error(
-            'Falha na requisição. Verifique o console para mais detalhes.'
-          );
         },
       });
   }
 
-  // Método para atualizar a receita
   onUpdate() {
-    if (this.revenueForm.valid && this.revenueId) {
+    if (this.revenueForm.valid && this.monthYear && this.revenueId) {
       this.updateRevenue();
     } else {
       console.error(
-        'O formulário não é válido ou o ID da receita está ausente.'
+        'O formulário não é válido ou os parâmetros de rota estão ausentes.'
       );
     }
   }
@@ -128,9 +119,13 @@ export class EditarReceitas implements OnInit {
     const updatedRevenue = this.revenueForm.value;
 
     this.http
-      .put(`http://localhost:3000/revenues/${this.revenueId}`, updatedRevenue, {
-        headers,
-      })
+      .put(
+        `http://localhost:3000/revenues/${this.monthYear}/${this.revenueId}`,
+        updatedRevenue,
+        {
+          headers,
+        }
+      )
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error('Erro ao atualizar receita:', error);

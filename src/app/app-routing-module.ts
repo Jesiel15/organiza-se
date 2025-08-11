@@ -43,12 +43,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'editar-despesa/:id',
+    path: 'editar-despesa/:monthYear/:expenseId',
     component: EditarDespesas,
     canActivate: [AuthGuard],
   },
   {
-    path: 'editar-receita/:id',
+    path: 'editar-receita/:monthYear/:revenueId',
     component: EditarReceitas,
     canActivate: [AuthGuard],
   },

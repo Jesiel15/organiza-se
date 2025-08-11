@@ -99,21 +99,44 @@ export class TransactionsList implements OnInit {
   }
 
   goToEditDespesa(expense: Expense) {
-    this.router.navigate(['/editar-despesa', expense.id]);
+    const dateObj = new Date(expense.dateExpense);
+    const monthYear = `${String(dateObj.getMonth() + 1).padStart(
+      2,
+      '0'
+    )}${dateObj.getFullYear()}`;
+
+    this.router.navigate(['/editar-despesa', monthYear, expense.id]);
   }
 
   goToEditReceita(revenue: Revenue) {
-    this.router.navigate(['/editar-receita', revenue.id]);
+    const dateObj = new Date(revenue.dateRevenue);
+    const monthYear = `${String(dateObj.getMonth() + 1).padStart(
+      2,
+      '0'
+    )}${dateObj.getFullYear()}`;
+
+    this.router.navigate(['/editar-receita', monthYear, revenue.id]);
   }
 
-  deleteExpense(id: string) {
+  getMonthYearKey(date: Date): string {
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+    return `${month}${year}`;
+  }
+
+  deleteExpense(expense: Expense) {
     this.isLoading = true;
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
+
+    const monthYear = this.getMonthYearKey(new Date(expense.dateExpense));
+
     this.http
-      .delete(`http://localhost:3000/expenses/${id}`, { headers })
+      .delete(`http://localhost:3000/expenses/${monthYear}/${expense.id}`, {
+        headers,
+      })
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: () => {
@@ -135,15 +158,19 @@ export class TransactionsList implements OnInit {
       });
   }
 
-  deleteRevenue(id: string) {
+  deleteRevenue(revenue: Revenue) {
     this.isLoading = true;
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
 
+    const monthYear = this.getMonthYearKey(new Date(revenue.dateRevenue));
+
     this.http
-      .delete(`http://localhost:3000/revenues/${id}`, { headers })
+      .delete(`http://localhost:3000/revenues/${monthYear}/${revenue.id}`, {
+        headers,
+      })
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: () => {
@@ -173,7 +200,7 @@ export class TransactionsList implements OnInit {
       acceptLabel: 'Confirmar?',
       rejectLabel: 'Cancelar',
       accept: () => {
-        this.deleteExpense(expense.id);
+        this.deleteExpense(expense);
       },
     });
   }
@@ -186,7 +213,7 @@ export class TransactionsList implements OnInit {
       acceptLabel: 'Confirmar?',
       rejectLabel: 'Cancelar',
       accept: () => {
-        this.deleteRevenue(revenue.id);
+        this.deleteRevenue(revenue);
       },
     });
   }

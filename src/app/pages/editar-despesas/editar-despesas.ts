@@ -5,7 +5,7 @@ import {
 } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router'; // Importe ActivatedRoute
+import { Router, ActivatedRoute } from '@angular/router';
 import { IconPickerDialog } from '../../components/icon-picker-dialog/icon-picker-dialog';
 import { catchError, take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -18,7 +18,8 @@ import { throwError } from 'rxjs';
 })
 export class EditarDespesas implements OnInit {
   expenseForm: FormGroup;
-  expenseId: string | null = null; // Propriedade para armazenar o ID
+  expenseId: string | null = null;
+  monthYear: string | null = null;
 
   @ViewChild(IconPickerDialog)
   iconPickerDialog!: IconPickerDialog;
@@ -40,16 +41,20 @@ export class EditarDespesas implements OnInit {
   }
 
   ngOnInit(): void {
-    this.expenseId = this.route.snapshot.paramMap.get('id');
-    if (this.expenseId) {
+    // Captura os dois parâmetros da rota
+    this.monthYear = this.route.snapshot.paramMap.get('monthYear');
+    this.expenseId = this.route.snapshot.paramMap.get('expenseId');
+
+    if (this.monthYear && this.expenseId) {
       this.loadExpenseData();
     } else {
-      console.error('ID da despesa não encontrado na rota.');
+      console.error(
+        'Parâmetros de rota (monthYear ou expenseId) não encontrados.'
+      );
       this.router.navigate(['/home']);
     }
   }
 
-  // Método para carregar os dados da despesa existente
   private loadExpenseData() {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -57,17 +62,21 @@ export class EditarDespesas implements OnInit {
       return;
     }
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
+    // Usa monthYear e expenseId na URL
     this.http
-      .get(`http://localhost:3000/expenses/${this.expenseId}`, { headers })
+      .get(
+        `http://localhost:3000/expenses/${this.monthYear}/${this.expenseId}`,
+        { headers }
+      )
       .pipe(
         take(1),
         catchError((error: HttpErrorResponse) => {
           console.error('Erro ao carregar despesa:', error);
-          if (error.status === 401 || error.status === 403) {
+          if (error.status === 404) {
+            this.router.navigate(['/home']);
+          } else if (error.status === 401 || error.status === 403) {
             localStorage.removeItem('token');
             this.router.navigate(['/login']);
           }
@@ -76,39 +85,18 @@ export class EditarDespesas implements OnInit {
       )
       .subscribe({
         next: (expense: any) => {
-          // A API provavelmente retorna a data como string, convertemos para objeto Date
           expense.dateExpense = new Date(expense.dateExpense);
-
-          // Popula o formulário com os dados carregados
           this.expenseForm.patchValue(expense);
-
-          // Formata o valor monetário no input após o carregamento
-          const valueInput = document.querySelector(
-            'input[formControlName="valueExpense"]'
-          ) as HTMLInputElement;
-          if (valueInput) {
-            valueInput.value = new Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-              minimumFractionDigits: 2,
-            }).format(expense.valueExpense);
-          }
-        },
-        error: (err) => {
-          console.error(
-            'Falha na requisição. Verifique o console para mais detalhes.'
-          );
         },
       });
   }
 
-  // Método para atualizar a despesa
   onUpdate() {
-    if (this.expenseForm.valid && this.expenseId) {
+    if (this.expenseForm.valid && this.monthYear && this.expenseId) {
       this.updateExpense();
     } else {
       console.error(
-        'O formulário não é válido ou o ID da despesa está ausente.'
+        'O formulário não é válido ou os parâmetros de rota estão ausentes.'
       );
     }
   }
@@ -128,9 +116,13 @@ export class EditarDespesas implements OnInit {
     const updatedExpense = this.expenseForm.value;
 
     this.http
-      .put(`http://localhost:3000/expenses/${this.expenseId}`, updatedExpense, {
-        headers,
-      })
+      .put(
+        `http://localhost:3000/expenses/${this.monthYear}/${this.expenseId}`,
+        updatedExpense,
+        {
+          headers,
+        }
+      )
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error('Erro ao atualizar despesa:', error);
