@@ -1,5 +1,5 @@
 .sidebar-container {
-  width: 300px; /* Keeping the fixed width, image shows a fixed width sidebar */
+  width: 300px;
   background-color: var(--color-white);
   // height: calc(100vh - 2rem);
   height: 100vh;
@@ -7,9 +7,9 @@
   flex-direction: column;
   // justify-content: space-between;
   // border-radius: 6px;
-  // padding: 3rem; /* REMOVE OR REDUCE THIS PADDING */
-  padding-top: 1.5rem; /* Only apply top/bottom padding to the container itself */
-  padding-bottom: 1.5rem; /* Match the vertical spacing from your original 3rem */
+  // padding: 3rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   // margin: 1rem;
   // border: 1px solid #e0e0e0;
@@ -19,11 +19,15 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  // padding-bottom: 1rem; /* This padding can be moved or adjusted */
-  // border-bottom: 1px solid #e0e0e0; /* This border will now stretch correctly */
-  padding-left: 1.5rem; /* Add horizontal padding to the logo section */
+  // padding-bottom: 1rem;
+  // border-bottom: 1px solid #e0e0e0;
+  padding-left: 1.5rem;
   padding-right: 1.5rem;
-  padding-bottom: 1rem; /* Keep existing bottom padding for spacing to divider */
+  padding-bottom: 1rem;
+
+  span {
+    padding-bottom: 1rem;
+  }
 }
 
 .sidebar-container .logo .logo-square {
