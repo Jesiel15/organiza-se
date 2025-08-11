@@ -1,8 +1,12 @@
-.container-depesas-receitas {
+.container-home {
   display: flex;
-  gap: 2rem;
+  // gap: 2rem;
   padding-top: 2rem;
   padding-bottom: 4rem;
+}
+
+.container-despesas-receitas {
+  padding-right: 2%;
 }
 
 p-card {
