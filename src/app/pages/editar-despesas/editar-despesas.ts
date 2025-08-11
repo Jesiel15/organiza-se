@@ -191,4 +191,8 @@ export class EditarDespesas implements OnInit {
     }).format(numericValue);
     inputElement.value = formattedValue;
   }
+
+  voltarParaHome() {
+    this.router.navigate(['/home']);
+  }
 }

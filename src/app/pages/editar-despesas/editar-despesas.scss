@@ -93,6 +93,22 @@ textarea[pInputTextarea],
   color: var(--color-white);
 }
 
+.btn-cancelar {
+  width: 100%;
+  max-width: 200px;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  background-color: var(--color-red);
+  border-color: var(--color-red);
+  color: var(--color-white);
+
+  &:hover {
+    background-color: rgba(var(--color-red-rgb), 0.7);
+    border-color: rgba(var(--color-red-rgb), 0.5);
+    color: var(--color-black);
+  }
+}
+
 ::ng-deep {
   .p-inputtext {
     flex-grow: 1;
