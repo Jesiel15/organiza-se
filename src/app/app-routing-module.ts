@@ -8,6 +8,8 @@ import { Home } from './pages/home/home';
 import { AuthGuard } from './auth.guard';
 import { AdicionarDespesas } from './pages/adicionar-despesas/adicionar-despesas';
 import { AdicionarReceitas } from './pages/adicionar-receitas/adicionar-receitas';
+import { EditarDespesas } from './pages/editar-despesas/editar-despesas';
+import { EditarReceitas } from './pages/editar-receitas/editar-receitas';
 
 const routes: Routes = [
   {
@@ -38,6 +40,16 @@ const routes: Routes = [
   {
     path: 'add-receita',
     component: AdicionarReceitas,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'editar-despesa/:id',
+    component: EditarDespesas,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'editar-receita/:id',
+    component: EditarReceitas,
     canActivate: [AuthGuard],
   },
   // Rota curinga para redirecionar URLs desconhecidas para login (opcional)

@@ -1,7 +1,28 @@
+// transactions-list.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TransactionsService } from '../../service/transactions.service';
+
+interface Expense {
+  id: string;
+  nameExpense: string;
+  valueExpense: number;
+  dateExpense: Date;
+  icon: string;
+  color: string;
+  anotation: string;
+}
+
+interface Revenue {
+  id: string;
+  nameRevenue: string;
+  valueRevenue: number;
+  dateRevenue: Date;
+  icon: string;
+  color: string;
+  anotation: string;
+}
 
 @Component({
   selector: 'app-transactions-list',
@@ -26,23 +47,20 @@ export class TransactionsList implements OnInit {
 
   fetchExpenses() {
     const token = localStorage.getItem('token');
-
     if (!token) {
       console.warn('Token não encontrado.');
       return;
     }
-
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-
     this.http
-      .get<Expense[]>('http://localhost:3000/expenses', { headers })
+      .get<any[]>('http://localhost:3000/expenses', { headers })
       .subscribe({
         next: (data) => {
-          console.warn(data);
           this.expenses = data.map((exp) => ({
             ...exp,
+            id: exp.id || exp._id, // Garante que o ID seja mapeado
             dateExpense: new Date(exp.dateExpense),
           }));
           const total = this.expenses.reduce(
@@ -59,23 +77,20 @@ export class TransactionsList implements OnInit {
 
   fetchRevenues() {
     const token = localStorage.getItem('token');
-
     if (!token) {
       console.warn('Token não encontrado.');
       return;
     }
-
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-
     this.http
-      .get<Revenue[]>('http://localhost:3000/revenues', { headers })
+      .get<any[]>('http://localhost:3000/revenues', { headers })
       .subscribe({
         next: (data) => {
-          console.warn(data);
           this.revenues = data.map((exp) => ({
             ...exp,
+            id: exp.id || exp._id, // Garante que o ID seja mapeado
             dateRevenue: new Date(exp.dateRevenue),
           }));
           const total = this.revenues.reduce(
@@ -96,5 +111,15 @@ export class TransactionsList implements OnInit {
 
   goToAddReceita() {
     this.router.navigate(['/add-receita']);
+  }
+
+  goToEditDespesa(expense: Expense) {
+    console.log(expense);
+    console.log('expense. id>: ', expense.id);
+    this.router.navigate(['/editar-despesa', expense.id]);
+  }
+
+  goToEditReceita(revenue: Revenue) {
+    this.router.navigate(['/editar-receita', revenue.id]);
   }
 }

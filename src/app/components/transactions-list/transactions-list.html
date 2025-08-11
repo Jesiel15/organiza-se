@@ -30,6 +30,13 @@
           >
             R$ {{ expense.valueExpense | number : "1.2-2" }}
           </div>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-text p-button-sm"
+            (click)="goToEditDespesa(expense)"
+          ></button>
         </div>
       </div>
     </p-card>
@@ -66,6 +73,13 @@
           >
             R$ {{ revenue.valueRevenue | number : "1.2-2" }}
           </div>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-text p-button-sm"
+            (click)="goToEditReceita(revenue)"
+          ></button>
         </div>
       </div>
     </p-card>
