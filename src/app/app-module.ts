@@ -20,7 +20,7 @@ import { HomeModule } from './pages/home/home-module';
 import { DividerModule } from 'primeng/divider';
 import { GraficoModule } from './pages/graficos/grafico-module';
 import { Routes } from '@angular/router';
-import { Grafico } from './pages/graficos/grafico'; 
+import { Grafico } from './pages/graficos/grafico';
 import { CadastroModule } from './pages/cadastro/cadastro-module';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { registerLocaleData } from '@angular/common';

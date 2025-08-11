@@ -1,9 +1,10 @@
 interface Revenue {
-  icon: string;
-  color: string;
+  id: string;
   nameRevenue: string;
   valueRevenue: number;
   dateRevenue: Date;
+  icon: string;
+  color: string;
   anotation: string;
 }
 

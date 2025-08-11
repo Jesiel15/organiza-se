@@ -1,4 +1,6 @@
 <div class="container-depesas-receitas">
+  <p-confirmDialog styleClass="custom-confirm-dialog"></p-confirmDialog>
+
   <div>
     <h1>Despesas</h1>
     <p-card>
@@ -84,7 +86,7 @@
             pButton
             type="button"
             icon="pi pi-pencil"
-            class="p-button-rounded p-button-text p-button-sm editar"
+            class="p-button-rounded p-button-text p-button-lg editar"
             (click)="goToEditReceita(revenue)"
           ></button>
           <button

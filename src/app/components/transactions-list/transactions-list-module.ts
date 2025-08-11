@@ -5,10 +5,18 @@ import { CardModule } from 'primeng/card';
 import { RippleModule } from 'primeng/ripple';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [TransactionsList],
-  imports: [CommonModule, CardModule, ButtonModule, DialogModule, RippleModule],
+  imports: [
+    CommonModule,
+    CardModule,
+    ButtonModule,
+    DialogModule,
+    RippleModule,
+    ConfirmDialogModule,
+  ],
   exports: [TransactionsList],
 })
 export class TransactionsListModule {}

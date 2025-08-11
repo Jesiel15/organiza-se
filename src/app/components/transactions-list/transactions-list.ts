@@ -1,43 +1,28 @@
-// transactions-list.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TransactionsService } from '../../service/transactions.service';
-
-interface Expense {
-  id: string;
-  nameExpense: string;
-  valueExpense: number;
-  dateExpense: Date;
-  icon: string;
-  color: string;
-  anotation: string;
-}
-
-interface Revenue {
-  id: string;
-  nameRevenue: string;
-  valueRevenue: number;
-  dateRevenue: Date;
-  icon: string;
-  color: string;
-  anotation: string;
-}
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transactions-list',
   standalone: false,
   templateUrl: './transactions-list.html',
-  styleUrl: './transactions-list.scss',
+  styleUrls: ['./transactions-list.scss'],
+  providers: [ConfirmationService, MessageService],
 })
 export class TransactionsList implements OnInit {
   expenses: Expense[] = [];
   revenues: Revenue[] = [];
+  isLoading: boolean = false;
 
   constructor(
     private router: Router,
     private http: HttpClient,
-    private transactionsService: TransactionsService
+    private transactionsService: TransactionsService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -114,8 +99,6 @@ export class TransactionsList implements OnInit {
   }
 
   goToEditDespesa(expense: Expense) {
-    console.log(expense);
-    console.log('expense. id>: ', expense.id);
     this.router.navigate(['/editar-despesa', expense.id]);
   }
 
@@ -123,11 +106,88 @@ export class TransactionsList implements OnInit {
     this.router.navigate(['/editar-receita', revenue.id]);
   }
 
+  deleteExpense(id: string) {
+    this.isLoading = true;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    this.http
+      .delete(`http://localhost:3000/expenses/${id}`, { headers })
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: 'Despesa excluída com sucesso!',
+          });
+          this.fetchExpenses();
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao excluir a despesa.',
+          });
+          console.error('Erro ao excluir despesa:', err);
+        },
+      });
+  }
+
+  deleteRevenue(id: string) {
+    this.isLoading = true;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    this.http
+      .delete(`http://localhost:3000/revenues/${id}`, { headers })
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: 'Receita excluída com sucesso!',
+          });
+          this.fetchRevenues();
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao excluir a receita.',
+          });
+          console.error('Erro ao excluir receita:', err);
+        },
+      });
+  }
+
   openModalExluirDespesa(expense: Expense) {
-    console.log('Modal excluir Despesa ', expense);
+    this.confirmationService.confirm({
+      message: `Tem certeza que deseja excluir a despesa: <br> <br> <strong>${expense.nameExpense}</strong>?`,
+      header: 'Excluir despesa',
+      // icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Confirmar?',
+      rejectLabel: 'Cancelar',
+      accept: () => {
+        this.deleteExpense(expense.id);
+      },
+    });
   }
 
   openModalExluirReceita(revenue: Revenue) {
-    console.log('Modal excluir Receita ', revenue);
+    this.confirmationService.confirm({
+      message: `Tem certeza que deseja excluir a receita: <br> <br> <strong>${revenue.nameRevenue}</strong>?`,
+      header: 'Excluir receita',
+      // icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Confirmar?',
+      rejectLabel: 'Cancelar',
+      accept: () => {
+        this.deleteRevenue(revenue.id);
+      },
+    });
   }
 }

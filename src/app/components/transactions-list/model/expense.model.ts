@@ -1,9 +1,10 @@
 interface Expense {
-  icon: string;
-  color: string;
+  id: string;
   nameExpense: string;
   valueExpense: number;
   dateExpense: Date;
+  icon: string;
+  color: string;
   anotation: string;
 }
 
