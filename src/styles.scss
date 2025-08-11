@@ -6,6 +6,11 @@ body {
   font-family: "Red Rose", sans-serif;
 }
 
+html {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
 :root {
   // === Brand Colours ===
   --color-red: #e0533d;
@@ -25,7 +30,6 @@ body {
   --color-gray: #848484;
   --color-background: #bdd4ed;
   --color-background-home: #f5f5f5;
-
 
   // === Aura Theme Overrides ===
   --aura-primary: var(--color-brand-blue); // Cor principal do tema
