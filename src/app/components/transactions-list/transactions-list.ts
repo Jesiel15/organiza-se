@@ -122,4 +122,12 @@ export class TransactionsList implements OnInit {
   goToEditReceita(revenue: Revenue) {
     this.router.navigate(['/editar-receita', revenue.id]);
   }
+
+  openModalExluirDespesa(expense: Expense) {
+    console.log('Modal excluir Despesa ', expense);
+  }
+
+  openModalExluirReceita(revenue: Revenue) {
+    console.log('Modal excluir Receita ', revenue);
+  }
 }

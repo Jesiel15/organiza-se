@@ -34,8 +34,15 @@
             pButton
             type="button"
             icon="pi pi-pencil"
-            class="p-button-rounded p-button-text p-button-sm"
+            class="p-button-rounded p-button-text p-button-lg editar"
             (click)="goToEditDespesa(expense)"
+          ></button>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-minus-circle"
+            class="p-button-rounded p-button-text p-button-lg excluir"
+            (click)="openModalExluirDespesa(expense)"
           ></button>
         </div>
       </div>
@@ -77,8 +84,15 @@
             pButton
             type="button"
             icon="pi pi-pencil"
-            class="p-button-rounded p-button-text p-button-sm"
+            class="p-button-rounded p-button-text p-button-sm editar"
             (click)="goToEditReceita(revenue)"
+          ></button>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-minus-circle"
+            class="p-button-rounded p-button-text p-button-lg excluir"
+            (click)="openModalExluirReceita(revenue)"
           ></button>
         </div>
       </div>
