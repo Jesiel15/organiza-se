@@ -1,103 +1,122 @@
-<div class="container-home">
+<div class="container-principal">
   <p-confirmDialog styleClass="custom-confirm-dialog"></p-confirmDialog>
 
-  <div class="container-despesas-receitas">
-    <h1>Despesas</h1>
-    <p-card>
-      <button
-        pButton
-        type="button"
-        label="Adicionar despesa"
-        class="p-button-secondary custom-dashed-button"
-        (click)="goToAddDespesa()"
-      ></button>
-
-      <div class="expenses-list">
-        <div class="expense-item" *ngFor="let expense of expenses">
-          <div
-            class="expense-icon"
-            [ngStyle]="{ 'background-color': expense.color }"
-          >
-            <i class="{{ expense.icon }}"></i>
-          </div>
-          <div class="expense-details">
-            <span class="expense-name">{{ expense.nameExpense }}</span>
-            <span class="expense-date">{{
-              expense.dateExpense | date : "dd/MM/yyyy"
-            }}</span>
-          </div>
-          <div
-            class="expense-amount"
-            [ngClass]="{ negative: expense.valueExpense < 0 }"
-          >
-            R$ {{ expense.valueExpense | number : "1.2-2" }}
-          </div>
-          <button
-            pButton
-            type="button"
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-text p-button-lg editar"
-            (click)="goToEditDespesa(expense)"
-          ></button>
-          <button
-            pButton
-            type="button"
-            icon="pi pi-minus-circle"
-            class="p-button-rounded p-button-text p-button-lg excluir"
-            (click)="openModalExluirDespesa(expense)"
-          ></button>
-        </div>
-      </div>
-    </p-card>
+  <div class="filter-container">
+    <span class="p-float-label">
+      <label for="monthyear">Filtrar por Mês/Ano</label>
+      <p-datepicker
+        [(ngModel)]="monthYearFilter"
+        (onSelect)="onFilterChange()"
+        view="month"
+        dateFormat="mm/yy"
+        inputId="monthyear"
+        [showIcon]="true"
+        [readonlyInput]="true"
+        [placeholder]="'Selecione o mês'"
+        [showOnFocus]="false"
+      ></p-datepicker>
+    </span>
   </div>
 
-  <div>
-    <h1>Receitas/Salários</h1>
-    <p-card>
-      <button
-        pButton
-        type="button"
-        label="Adicionar receita"
-        class="p-button-secondary custom-dashed-button"
-        (click)="goToAddReceita()"
-      ></button>
+  <div class="container-despesas-receitas">
+    <div class="container-despesas">
+      <h1>Despesas</h1>
+      <p-card>
+        <button
+          pButton
+          type="button"
+          label="Adicionar despesa"
+          class="p-button-secondary custom-dashed-button"
+          (click)="goToAddDespesa()"
+        ></button>
 
-      <div class="revenues-list">
-        <div class="revenue-item" *ngFor="let revenue of revenues">
-          <div
-            class="revenue-icon"
-            [ngStyle]="{ 'background-color': revenue.color }"
-          >
-            <i class="{{ revenue.icon }}"></i>
+        <div class="expenses-list">
+          <div class="expense-item" *ngFor="let expense of expenses">
+            <div
+              class="expense-icon"
+              [ngStyle]="{ 'background-color': expense.color }"
+            >
+              <i class="{{ expense.icon }}"></i>
+            </div>
+            <div class="expense-details">
+              <span class="expense-name">{{ expense.nameExpense }}</span>
+              <span class="expense-date">{{
+                expense.dateExpense | date : "dd/MM/yyyy"
+              }}</span>
+            </div>
+            <div
+              class="expense-amount"
+              [ngClass]="{ negative: expense.valueExpense < 0 }"
+            >
+              R$ {{ expense.valueExpense | number : "1.2-2" }}
+            </div>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-text p-button-lg editar"
+              (click)="goToEditDespesa(expense)"
+            ></button>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-minus-circle"
+              class="p-button-rounded p-button-text p-button-lg excluir"
+              (click)="openModalExluirDespesa(expense)"
+            ></button>
           </div>
-          <div class="revenue-details">
-            <span class="revenue-name">{{ revenue.nameRevenue }}</span>
-            <span class="revenue-date">{{
-              revenue.dateRevenue | date : "dd/MM/yyyy"
-            }}</span>
-          </div>
-          <div
-            class="revenue-amount"
-            [ngClass]="{ negative: revenue.valueRevenue < 0 }"
-          >
-            R$ {{ revenue.valueRevenue | number : "1.2-2" }}
-          </div>
-          <button
-            pButton
-            type="button"
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-text p-button-lg editar"
-            (click)="goToEditReceita(revenue)"
-          ></button>
-          <button
-            pButton
-            type="button"
-            icon="pi pi-minus-circle"
-            class="p-button-rounded p-button-text p-button-lg excluir"
-            (click)="openModalExluirReceita(revenue)"
-          ></button>
         </div>
-      </div>
-    </p-card>
+      </p-card>
+    </div>
+
+    <div>
+      <h1>Receitas/Salários</h1>
+      <p-card>
+        <button
+          pButton
+          type="button"
+          label="Adicionar receita"
+          class="p-button-secondary custom-dashed-button"
+          (click)="goToAddReceita()"
+        ></button>
+
+        <div class="revenues-list">
+          <div class="revenue-item" *ngFor="let revenue of revenues">
+            <div
+              class="revenue-icon"
+              [ngStyle]="{ 'background-color': revenue.color }"
+            >
+              <i class="{{ revenue.icon }}"></i>
+            </div>
+            <div class="revenue-details">
+              <span class="revenue-name">{{ revenue.nameRevenue }}</span>
+              <span class="revenue-date">{{
+                revenue.dateRevenue | date : "dd/MM/yyyy"
+              }}</span>
+            </div>
+            <div
+              class="revenue-amount"
+              [ngClass]="{ negative: revenue.valueRevenue < 0 }"
+            >
+              R$ {{ revenue.valueRevenue | number : "1.2-2" }}
+            </div>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-text p-button-lg editar"
+              (click)="goToEditReceita(revenue)"
+            ></button>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-minus-circle"
+              class="p-button-rounded p-button-text p-button-lg excluir"
+              (click)="openModalExluirReceita(revenue)"
+            ></button>
+          </div>
+        </div>
+      </p-card>
+    </div>
   </div>
 </div>

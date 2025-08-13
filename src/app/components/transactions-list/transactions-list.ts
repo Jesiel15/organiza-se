@@ -1,31 +1,43 @@
+// transactions-list.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TransactionsService } from '../../service/transactions.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { finalize } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-transactions-list',
   standalone: false,
   templateUrl: './transactions-list.html',
   styleUrls: ['./transactions-list.scss'],
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService, MessageService, DatePipe],
 })
 export class TransactionsList implements OnInit {
   expenses: Expense[] = [];
   revenues: Revenue[] = [];
+  allExpenses: Expense[] = [];
+  allRevenues: Revenue[] = [];
   isLoading: boolean = false;
+  monthYearFilter: Date = new Date();
 
   constructor(
     private router: Router,
     private http: HttpClient,
     private transactionsService: TransactionsService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
+    const today = new Date();
+    this.monthYearFilter = new Date(today.getFullYear(), today.getMonth(), 1);
+    this.fetchTransactions();
+  }
+
+  fetchTransactions() {
     this.fetchExpenses();
     this.fetchRevenues();
   }
@@ -36,23 +48,19 @@ export class TransactionsList implements OnInit {
       console.warn('Token não encontrado.');
       return;
     }
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
+
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
     this.http
       .get<any[]>('http://localhost:3000/expenses', { headers })
       .subscribe({
         next: (data) => {
-          this.expenses = data.map((exp) => ({
+          this.allExpenses = data.map((exp) => ({
             ...exp,
-            id: exp.id || exp._id, // Garante que o ID seja mapeado
+            id: exp.id || exp._id,
             dateExpense: new Date(exp.dateExpense),
           }));
-          const total = this.expenses.reduce(
-            (acc, exp) => acc + exp.valueExpense,
-            0
-          );
-          this.transactionsService.setTotalExpenses(total);
+          this.applyFilter(); // Aplica o filtro após carregar os dados
         },
         error: (err) => {
           console.error('Erro ao buscar despesas:', err);
@@ -66,28 +74,65 @@ export class TransactionsList implements OnInit {
       console.warn('Token não encontrado.');
       return;
     }
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
+
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
     this.http
       .get<any[]>('http://localhost:3000/revenues', { headers })
       .subscribe({
         next: (data) => {
-          this.revenues = data.map((exp) => ({
+          this.allRevenues = data.map((exp) => ({
             ...exp,
-            id: exp.id || exp._id, // Garante que o ID seja mapeado
+            id: exp.id || exp._id,
             dateRevenue: new Date(exp.dateRevenue),
           }));
-          const total = this.revenues.reduce(
-            (acc, rev) => acc + rev.valueRevenue,
-            0
-          );
-          this.transactionsService.setTotalRevenues(total);
+          this.applyFilter(); // Aplica o filtro após carregar os dados
         },
         error: (err) => {
           console.error('Erro ao buscar receitas:', err);
         },
       });
+  }
+
+  onFilterChange() {
+    this.applyFilter(); // Chama a filtragem local
+  }
+
+  applyFilter() {
+    const selectedDate = this.monthYearFilter;
+    const selectedMonth = selectedDate.getMonth();
+    const selectedYear = selectedDate.getFullYear();
+
+    // Filtra as despesas
+    this.expenses = this.allExpenses.filter((expense) => {
+      const expenseDate = new Date(expense.dateExpense);
+      return (
+        expenseDate.getMonth() === selectedMonth &&
+        expenseDate.getFullYear() === selectedYear
+      );
+    });
+
+    // Filtra as receitas
+    this.revenues = this.allRevenues.filter((revenue) => {
+      const revenueDate = new Date(revenue.dateRevenue);
+      return (
+        revenueDate.getMonth() === selectedMonth &&
+        revenueDate.getFullYear() === selectedYear
+      );
+    });
+
+    // Recalcula os totais
+    const totalExpenses = this.expenses.reduce(
+      (acc, exp) => acc + exp.valueExpense,
+      0
+    );
+    this.transactionsService.setTotalExpenses(totalExpenses);
+
+    const totalRevenues = this.revenues.reduce(
+      (acc, rev) => acc + rev.valueRevenue,
+      0
+    );
+    this.transactionsService.setTotalRevenues(totalRevenues);
   }
 
   goToAddDespesa() {
@@ -104,7 +149,6 @@ export class TransactionsList implements OnInit {
       2,
       '0'
     )}${dateObj.getFullYear()}`;
-
     this.router.navigate(['/editar-despesa', monthYear, expense.id]);
   }
 
@@ -114,7 +158,6 @@ export class TransactionsList implements OnInit {
       2,
       '0'
     )}${dateObj.getFullYear()}`;
-
     this.router.navigate(['/editar-receita', monthYear, revenue.id]);
   }
 
@@ -127,10 +170,7 @@ export class TransactionsList implements OnInit {
   deleteExpense(expense: Expense) {
     this.isLoading = true;
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     const monthYear = this.getMonthYearKey(new Date(expense.dateExpense));
 
     this.http
@@ -161,10 +201,7 @@ export class TransactionsList implements OnInit {
   deleteRevenue(revenue: Revenue) {
     this.isLoading = true;
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     const monthYear = this.getMonthYearKey(new Date(revenue.dateRevenue));
 
     this.http
@@ -196,7 +233,6 @@ export class TransactionsList implements OnInit {
     this.confirmationService.confirm({
       message: `Tem certeza que deseja excluir a despesa: <br> <br> <strong>${expense.nameExpense}</strong>?`,
       header: 'Excluir despesa',
-      // icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Confirmar?',
       rejectLabel: 'Cancelar',
       accept: () => {
@@ -209,7 +245,6 @@ export class TransactionsList implements OnInit {
     this.confirmationService.confirm({
       message: `Tem certeza que deseja excluir a receita: <br> <br> <strong>${revenue.nameRevenue}</strong>?`,
       header: 'Excluir receita',
-      // icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Confirmar?',
       rejectLabel: 'Cancelar',
       accept: () => {

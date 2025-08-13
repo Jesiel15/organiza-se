@@ -6,6 +6,8 @@ import { RippleModule } from 'primeng/ripple';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [TransactionsList],
@@ -16,6 +18,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     DialogModule,
     RippleModule,
     ConfirmDialogModule,
+    DatePickerModule,
+    FormsModule,
   ],
   exports: [TransactionsList],
 })
