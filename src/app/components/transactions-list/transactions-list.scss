@@ -275,8 +275,8 @@ h1 {
   .p-datepicker {
     // background-color: var(--color-background-home, #ffffff) !important;
     // border: 1px solid #ced4da !important;
-    // border-radius: 6px !important;
-    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 6px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     // color: var(--color-black, #000000) !important;
 
     .p-datepicker-month-selected {
