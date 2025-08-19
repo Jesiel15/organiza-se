@@ -10,6 +10,7 @@ import { AdicionarDespesas } from './pages/adicionar-despesas/adicionar-despesas
 import { AdicionarReceitas } from './pages/adicionar-receitas/adicionar-receitas';
 import { EditarDespesas } from './pages/editar-despesas/editar-despesas';
 import { EditarReceitas } from './pages/editar-receitas/editar-receitas';
+import { Configuracoes } from './pages/configuracoes/configuracoes';
 
 const routes: Routes = [
   {
@@ -30,6 +31,11 @@ const routes: Routes = [
   {
     path: 'graficos',
     component: Grafico,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'configuracoes',
+    component: Configuracoes,
     canActivate: [AuthGuard],
   },
   {
