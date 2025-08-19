@@ -37,6 +37,7 @@ export class Login {
       .subscribe({
         next: (res) => {
           // alert('Login realizado com sucesso!');
+          // console.log("#### resp login:",res)
           localStorage.setItem('token', res.token);
           this.router.navigate(['/home']); // navega para a home
         },
