@@ -282,10 +282,11 @@ h1 {
     .p-datepicker-month-selected {
       background-color: var(--color-background, #ffffff) !important;
       color: var(--color-black, #000000) !important;
+    }
 
-      &:focus {
-        background-color: red !important;
-      }
+    .p-datepicker-year-selected {
+      background-color: var(--color-background, #ffffff) !important;
+      color: var(--color-black, #000000) !important;
     }
 
     span {

@@ -25,6 +25,7 @@ import { CadastroModule } from './pages/cadastro/cadastro-module';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
+import { ChartModule } from 'primeng/chart';
 
 const routes: Routes = [
   { path: '', component: Grafico }, // Rota padrão, ajuste conforme sua necessidade
@@ -56,6 +57,7 @@ registerLocaleData(ptBr);
     CheckboxModule,
     DividerModule,
     ColorPickerModule,
+    ChartModule,
   ],
   providers: [
     provideAnimationsAsync(), // Isso já habilita o suporte a animações

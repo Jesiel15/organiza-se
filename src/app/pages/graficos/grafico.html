@@ -1,8 +1,38 @@
 <div class="container">
   <app-sidebar-menu></app-sidebar-menu>
-
   <div class="content">
-    <!-- Aqui vai o conteúdo da tela Home, como no seu layout -->
-    <h1>Gráfico</h1>
+    <h1>Gráfico de Despesas e Receitas/Salários Anual</h1>
+
+    <div class="filter-container">
+      <span class="p-float-label">
+        <label for="year">Filtrar por Ano</label>
+        <p-datepicker
+          [(ngModel)]="yearFilter"
+          (onSelect)="onFilterChange()"
+          view="year"
+          dateFormat="yy"
+          inputId="year"
+          [showIcon]="true"
+          [readonlyInput]="true"
+          [placeholder]="'Selecione o ano'"
+          [showOnFocus]="false"
+        ></p-datepicker>
+      </span>
+    </div>
+
+    <div class="graficos">
+      <div class="card grafico-container">
+        <p-chart type="bar" [data]="data" [options]="options" />
+      </div>
+
+      <div class="card grafico-container">
+        <p-chart
+          type="line"
+          [data]="data"
+          [options]="options"
+          class="h-[30rem]"
+        />
+      </div>
+    </div>
   </div>
 </div>
