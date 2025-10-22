@@ -1,23 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import allLocales from '@fullcalendar/core/locales-all';
+import { DatePipe } from '@angular/common';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-calendario',
   standalone: false,
   templateUrl: './calendario.html',
   styleUrl: './calendario.scss',
+  providers: [DatePipe],
 })
 export class Calendario implements OnInit {
+  @ViewChild('fullcalendar') calendarComponent!: FullCalendarComponent;
+
   calendarOptions: any;
   events: any[] = [];
+  monthYearFilter: Date = new Date();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private datePipe: DatePipe) {}
 
   ngOnInit() {
+    const today = new Date();
+
+    this.monthYearFilter = new Date(today.getFullYear(), today.getMonth(), 1);
     this.setCalendarOptions();
     this.fetchTransactions();
   }
@@ -46,7 +55,20 @@ export class Calendario implements OnInit {
         week: 'Semana',
         day: 'Dia',
       },
+
+      datesSet: (dateInfo: any) => {
+        this.monthYearFilter = dateInfo.view.calendar.getDate();
+      },
     };
+  }
+
+  onFilterChange() {
+    if (this.monthYearFilter && this.calendarComponent) {
+      const calendarApi = this.calendarComponent.getApi();
+      if (calendarApi) {
+        calendarApi.gotoDate(this.monthYearFilter);
+      }
+    }
   }
 
   fetchTransactions() {
@@ -78,9 +100,11 @@ export class Calendario implements OnInit {
           color: '#22C55E',
         }));
 
+        this.events = [...expenseEvents, ...revenueEvents];
+
         this.calendarOptions = {
           ...this.calendarOptions,
-          events: [...expenseEvents, ...revenueEvents],
+          events: this.events,
         };
       },
       error: (err) => {

@@ -5,8 +5,27 @@
     <div class="container-calendar">
       <h1>Calendário de Transações</h1>
 
+      <div class="filter-container">
+        <span class="p-float-label">
+          <label for="monthyear">Filtrar por Mês/Ano</label>
+          <p-datepicker
+            [(ngModel)]="monthYearFilter"
+            (onSelect)="onFilterChange()"
+            view="month"
+            dateFormat="mm/yy"
+            inputId="monthyear"
+            [showIcon]="true"
+            [readonlyInput]="true"
+            [placeholder]="'Selecione o mês'"
+            [showOnFocus]="false"
+          ></p-datepicker>
+        </span>
+      </div>
       <div class="calendar-wrapper">
-        <full-calendar [options]="calendarOptions"></full-calendar>
+        <full-calendar
+          #fullcalendar
+          [options]="calendarOptions"
+        ></full-calendar>
       </div>
     </div>
   </div>
