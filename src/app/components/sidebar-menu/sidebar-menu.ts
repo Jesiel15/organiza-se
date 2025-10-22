@@ -1,17 +1,22 @@
-import { Component, OnInit } from '@angular/core'; // Adicionado OnInit
-import { Router, NavigationEnd } from '@angular/router'; // Adicionado NavigationEnd
-import { filter } from 'rxjs/operators'; // Necessário para filtrar eventos do router
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar-menu',
   standalone: false,
   templateUrl: './sidebar-menu.html',
   styleUrl: './sidebar-menu.scss',
+  providers: [ConfirmationService],
 })
 export class SidebarMenu implements OnInit {
   activeRoute: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private confirmationService: ConfirmationService
+  ) {}
 
   ngOnInit() {
     this.updateActiveRoute(this.router.url);
@@ -43,8 +48,20 @@ export class SidebarMenu implements OnInit {
     ];
 
   sair() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.openModalConfirmarLogout();
+  }
+
+  openModalConfirmarLogout() {
+    this.confirmationService.confirm({
+      message: `Tem certeza que deseja sair?`,
+      header: 'Deseja sair',
+      acceptLabel: 'Sair?',
+      rejectLabel: 'Cancelar',
+      accept: () => {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      },
+    });
   }
 
   navegar(route: string) {

@@ -1,4 +1,5 @@
 <div class="sidebar-container">
+  <p-confirmDialog styleClass="custom-confirm-dialog"></p-confirmDialog>
   <div class="logo">
     <img src="assets/img/logo.png" alt="Logo" width="50" />
     <span>Organiza-se</span>
@@ -9,7 +10,7 @@
       <li
         *ngFor="let item of menuItems"
         [class]="item.class || 'menu-item'"
-        [class.active]="item.route !== '/login' && activeRoute === item.route" 
+        [class.active]="item.route !== '/login' && activeRoute === item.route"
         (click)="item.route === '/login' ? sair() : navegar(item.route)"
       >
         <i [class]="item.icon"></i>
