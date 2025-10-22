@@ -63,7 +63,7 @@
   list-style: none;
   padding: 0;
   padding-left: 1rem;
-  margin: 1.5rem 0;
+  margin: 3rem 0;
 }
 
 .sidebar-container nav ul .menu-item {
@@ -77,6 +77,8 @@
   font-size: 1.2rem;
   color: var(--color-black);
   transition: background-color 0.2s, color 0.2s;
+  margin-right: 20px;
+  margin-bottom: 2px;
 }
 
 .sidebar-container nav ul .menu-item i {
@@ -85,8 +87,9 @@
 }
 
 .sidebar-container nav ul .menu-item:hover {
-  background-color: #e0f2fe;
+  background-color: var(--color-sky-blue-suave);
   color: var(--color-sky-blue);
+  margin-right: 20px;
 }
 
 .sidebar-container nav ul .menu-item:hover i {
@@ -102,8 +105,9 @@
 }
 
 .sidebar-container nav ul .sair:hover {
-  background-color: #fecaca;
+  background-color: var(--color-red-suave);
   color: var(--color-red);
+  margin-right: 20px;
 }
 
 .sidebar-container nav ul .sair:hover i {
