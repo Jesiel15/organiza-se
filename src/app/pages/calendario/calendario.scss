@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  gap: 20px;
+  background-color: var(--color-background-home);
+  height: 100vh;
+  overflow: hidden;
+
+  .content {
+    flex: 1;
+    padding: 20px;
+    border-radius: 6px;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
+h1 {
+  color: var(--color-black);
+  margin-top: 3vw;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.calendar-wrapper {
+  padding: 20px;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+::ng-deep {
+  .fc-toolbar-title {
+    color: var(--color-black) !important;
+  }
+
+  .fc-button-primary {
+    background-color: var(--color-sky-blue) !important;
+    border: none !important;
+    color: var(--color-black) !important;
+  }
+
+  .fc-daygrid-event {
+    background-color: var(--color-sky-blue) !important;
+    border: none !important;
+    font-size: 0.8rem;
+  }
+
+  .fc-event-title {
+    color: var(--color-white) !important;
+  }
+
+  .fc-daygrid-day-number {
+    color: var(--color-black) !important;
+  }
+}

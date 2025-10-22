@@ -26,6 +26,8 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { ChartModule } from 'primeng/chart';
+import { CalendarioModule } from './pages/calendario/calendario-module';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 const routes: Routes = [
   { path: '', component: Grafico }, // Rota padrão, ajuste conforme sua necessidade
@@ -48,6 +50,7 @@ registerLocaleData(ptBr);
     CadastroModule,
     HomeModule,
     GraficoModule,
+    CalendarioModule,
 
     // PrimeNG
     CardModule,
@@ -58,6 +61,9 @@ registerLocaleData(ptBr);
     DividerModule,
     ColorPickerModule,
     ChartModule,
+
+    // fullcalendar
+    FullCalendarModule,
   ],
   providers: [
     provideAnimationsAsync(), // Isso já habilita o suporte a animações

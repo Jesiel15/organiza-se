@@ -11,6 +11,7 @@ import { AdicionarReceitas } from './pages/adicionar-receitas/adicionar-receitas
 import { EditarDespesas } from './pages/editar-despesas/editar-despesas';
 import { EditarReceitas } from './pages/editar-receitas/editar-receitas';
 import { Configuracoes } from './pages/configuracoes/configuracoes';
+import { Calendario } from './pages/calendario/calendario';
 
 const routes: Routes = [
   {
@@ -31,6 +32,11 @@ const routes: Routes = [
   {
     path: 'graficos',
     component: Grafico,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'calendario',
+    component: Calendario,
     canActivate: [AuthGuard],
   },
   {
