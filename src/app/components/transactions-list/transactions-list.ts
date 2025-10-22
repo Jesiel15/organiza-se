@@ -27,13 +27,26 @@ export class TransactionsList implements OnInit {
     private http: HttpClient,
     private transactionsService: TransactionsService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private datePipe: DatePipe
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
+    const savedFilter = localStorage.getItem('transactionsFilter');
     const today = new Date();
-    this.monthYearFilter = new Date(today.getFullYear(), today.getMonth(), 1);
+    let initialDate = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    if (savedFilter) {
+      const month = parseInt(savedFilter.substring(0, 2)) - 1; // Mês (0-11)
+      const year = parseInt(savedFilter.substring(2, 6)); // Ano
+
+      initialDate = new Date(year, month, 1);
+
+      // Remova o filtro para não carregar eternamente
+      localStorage.removeItem('transactionsFilter');
+    }
+
+    this.monthYearFilter = initialDate;
+
     this.fetchTransactions();
   }
 
@@ -60,7 +73,7 @@ export class TransactionsList implements OnInit {
             id: exp.id || exp._id,
             dateExpense: new Date(exp.dateExpense),
           }));
-          this.applyFilter(); // Aplica o filtro após carregar os dados
+          this.applyFilter();
         },
         error: (err) => {
           console.error('Erro ao buscar despesas:', err);
@@ -86,7 +99,7 @@ export class TransactionsList implements OnInit {
             id: exp.id || exp._id,
             dateRevenue: new Date(exp.dateRevenue),
           }));
-          this.applyFilter(); // Aplica o filtro após carregar os dados
+          this.applyFilter();
         },
         error: (err) => {
           console.error('Erro ao buscar receitas:', err);
@@ -95,7 +108,7 @@ export class TransactionsList implements OnInit {
   }
 
   onFilterChange() {
-    this.applyFilter(); // Chama a filtragem local
+    this.applyFilter();
   }
 
   applyFilter() {
@@ -134,16 +147,24 @@ export class TransactionsList implements OnInit {
     );
     this.transactionsService.setTotalRevenues(totalRevenues);
   }
+  saveFilterState() {
+    const monthYearKey = this.getMonthYearKey(this.monthYearFilter);
+    localStorage.setItem('transactionsFilter', monthYearKey);
+  }
 
   goToAddDespesa() {
+    this.saveFilterState();
     this.router.navigate(['/add-despesa']);
   }
 
   goToAddReceita() {
+    this.saveFilterState();
     this.router.navigate(['/add-receita']);
   }
 
   goToEditDespesa(expense: Expense) {
+    this.saveFilterState();
+
     const dateObj = new Date(expense.dateExpense);
     const monthYear = `${String(dateObj.getMonth() + 1).padStart(
       2,
@@ -153,6 +174,8 @@ export class TransactionsList implements OnInit {
   }
 
   goToEditReceita(revenue: Revenue) {
+    this.saveFilterState();
+
     const dateObj = new Date(revenue.dateRevenue);
     const monthYear = `${String(dateObj.getMonth() + 1).padStart(
       2,
