@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'; // Adicionado OnInit
+import { Router, NavigationEnd } from '@angular/router'; // Adicionado NavigationEnd
+import { filter } from 'rxjs/operators'; // Necessário para filtrar eventos do router
 
 @Component({
   selector: 'app-sidebar-menu',
@@ -7,8 +8,25 @@ import { Router } from '@angular/router';
   templateUrl: './sidebar-menu.html',
   styleUrl: './sidebar-menu.scss',
 })
-export class SidebarMenu {
+export class SidebarMenu implements OnInit {
+  activeRoute: string = '';
+
   constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.updateActiveRoute(this.router.url);
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.updateActiveRoute(event.urlAfterRedirects);
+      });
+  }
+
+  updateActiveRoute(url: string): void {
+    const urlSegments = url.split('?')[0];
+    this.activeRoute = urlSegments;
+  }
 
   menuItems: { label: string; icon: string; route: string; class?: string }[] =
     [
@@ -20,7 +38,7 @@ export class SidebarMenu {
         label: 'Sair',
         icon: 'pi pi-exclamation-triangle',
         route: '/login',
-        class: 'menu-item sair'
+        class: 'menu-item sair',
       },
     ];
 

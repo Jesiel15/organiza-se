@@ -9,6 +9,7 @@
       <li
         *ngFor="let item of menuItems"
         [class]="item.class || 'menu-item'"
+        [class.active]="item.route !== '/login' && activeRoute === item.route" 
         (click)="item.route === '/login' ? sair() : navegar(item.route)"
       >
         <i [class]="item.icon"></i>
