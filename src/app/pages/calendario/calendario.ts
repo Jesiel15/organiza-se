@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import allLocales from '@fullcalendar/core/locales-all';
 
 @Component({
   selector: 'app-calendario',
@@ -17,6 +18,11 @@ export class Calendario implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
+    this.setCalendarOptions();
+    this.fetchTransactions();
+  }
+
+  setCalendarOptions() {
     this.calendarOptions = {
       initialView: 'dayGridMonth',
       plugins: [dayGridPlugin, interactionPlugin],
@@ -25,14 +31,22 @@ export class Calendario implements OnInit {
         center: 'title',
         right: 'dayGridMonth',
       },
+
+      locales: allLocales,
       locale: 'pt-br',
+
       editable: false,
       selectable: false,
       events: this.events,
       displayEventTime: false,
-    };
 
-    this.fetchTransactions();
+      buttonText: {
+        today: 'Hoje',
+        month: 'Mês',
+        week: 'Semana',
+        day: 'Dia',
+      },
+    };
   }
 
   fetchTransactions() {
@@ -73,22 +87,5 @@ export class Calendario implements OnInit {
         console.error('Erro ao buscar dados:', err);
       },
     });
-  }
-
-  setCalendarOptions() {
-    this.calendarOptions = {
-      initialView: 'dayGridMonth',
-      plugins: [dayGridPlugin, interactionPlugin],
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth',
-      },
-      locale: 'pt-br',
-      editable: false,
-      selectable: false,
-      events: this.events,
-      displayEventTime: false,
-    };
   }
 }

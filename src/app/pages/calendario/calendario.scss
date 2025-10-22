@@ -18,9 +18,9 @@
 
 h1 {
   color: var(--color-black);
-  margin-top: 3vw;
-  text-align: center;
-  margin-bottom: 20px;
+  margin-top: 2vw;
+  text-align: left;
+  margin-bottom: 50px;
 }
 
 .calendar-wrapper {
@@ -29,7 +29,8 @@ h1 {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  max-width: 900px;
+  // max-width: 900px;
+  width: 100%;
 }
 
 ::ng-deep {
@@ -38,22 +39,48 @@ h1 {
   }
 
   .fc-button-primary {
-    background-color: var(--color-sky-blue) !important;
+    background-color: var(--color-sky-blue-suave) !important;
     border: none !important;
     color: var(--color-black) !important;
   }
 
   .fc-daygrid-event {
-    background-color: var(--color-sky-blue) !important;
+    background-color: var(--color-sky-blue-suave) !important;
     border: none !important;
     font-size: 0.8rem;
   }
 
   .fc-event-title {
-    color: var(--color-white) !important;
+    color: var(--color-black) !important;
+    font-size: medium;
   }
 
   .fc-daygrid-day-number {
     color: var(--color-black) !important;
+  }
+
+  .fc-scroller {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-sky-blue) var(--color-white);
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--color-white);
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-sky-blue);
+      border-radius: 10px;
+      border: 2px solid var(--color-white);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: var(--color-black);
+    }
   }
 }
