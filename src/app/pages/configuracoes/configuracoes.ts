@@ -86,11 +86,17 @@ export class Configuracoes implements OnInit {
         if (Object.keys(payload).length > 0) {
           this.http
             .patch<any>(`${environmentDev.apiUrl}/user/emailname`, payload, {
-              headers: headers,
+              headers,
             })
             .subscribe({
-              next: () => {
+              next: (response) => {
                 alert('Perfil atualizado com sucesso! (Nome/Email)');
+
+                // Salva novo token no localStorage
+                if (response.token) {
+                  localStorage.setItem('token', response.token);
+                }
+
                 this.userForm.get('nameUser')?.disable();
                 this.userForm.get('emailUser')?.disable();
               },
@@ -106,7 +112,7 @@ export class Configuracoes implements OnInit {
         }
       } else {
         alert('Preencha corretamente os campos habilitados (Nome e Email).');
-        return; // Interrompe se a validação de nome/email falhar
+        return;
       }
     }
 
