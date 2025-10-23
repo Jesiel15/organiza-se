@@ -1,14 +1,9 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { environmentDev } from '../../utils/environment';
-import { catchError, take, throwError } from 'rxjs';
 import { AuthService } from '../../service/auth.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environmentDev } from '../../utils/environment';
 
 @Component({
   selector: 'app-configuracoes',
@@ -23,30 +18,88 @@ export class Configuracoes implements OnInit {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     this.userForm = this.fb.group({
-      nameUser: ['', [Validators.required]],
-      emailUser: ['', [Validators.required]],
-      passwordUser: ['', Validators.required],
-      newPasswordUser: ['', Validators.required],
-      confirmPasswordUser: ['', Validators.required],
+      nameUser: [{ value: '', disabled: true }, [Validators.required]],
+      emailUser: [{ value: '', disabled: true }, [Validators.email]],
+      passwordUser: [{ value: '', disabled: true }, [Validators.required]],
+      newPasswordUser: [{ value: '', disabled: true }, [Validators.required]],
+      confirmPasswordUser: [
+        { value: '', disabled: true },
+        [Validators.required],
+      ],
     });
   }
-
   ngOnInit(): void {
     this.loadUserData();
   }
 
   onUpdate() {
-    if (this.userForm.valid) {
-      // this.updateUser();
-      console.log('Fomulário válido');
+    if (
+      this.userForm.get('nameUser')?.enabled ||
+      this.userForm.get('emailUser')?.enabled
+    ) {
+      const nameControl = this.userForm.get('nameUser');
+      const emailControl = this.userForm.get('emailUser');
+
+      const nameEnabledAndWithValue =
+        nameControl?.enabled && nameControl.value.trim().length > 0;
+      const emailEnabledAndWithValue =
+        emailControl?.enabled && emailControl.value.trim().length > 0;
+
+      if (nameEnabledAndWithValue || emailEnabledAndWithValue) {
+        if (this.userForm.valid) {
+          const token = localStorage.getItem('token');
+          if (!token) {
+            console.warn('Token não encontrado.');
+            return;
+          }
+
+          const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          });
+
+          const payload: any = {};
+
+          if (nameEnabledAndWithValue) {
+            payload.name = nameControl?.value;
+          }
+          if (emailEnabledAndWithValue) {
+            payload.email = emailControl?.value;
+          }
+
+          this.http
+            .patch<any>(`${environmentDev.apiUrl}/user/emailname`, payload, {
+              headers: headers,
+            })
+            .subscribe({
+              next: (res) => {
+                alert('Perfil atualizado com sucesso! (Nome/Email)');
+                this.userForm.get('nameUser')?.disable();
+                this.userForm.get('emailUser')?.disable();
+              },
+              error: (err) => {
+                console.error('Erro na atualização:', err);
+                const errorMessage =
+                  err.error?.msg || 'Erro desconhecido ao atualizar.';
+                alert(`Erro: ${errorMessage}`);
+              },
+            });
+        } else {
+          alert(
+            'Os dados preenchidos não são válidos. Verifique o formato do email.'
+          );
+        }
+      } else {
+        alert(
+          'Preencha um valor válido nos campos habilitados (Nome ou Email) para atualizar.'
+        );
+      }
     } else {
-      console.error(
-        'O formulário não é válido ou os parâmetros de rota estão ausentes.'
-      );
+      console.log('Nenhum campo de nome ou email habilitado para atualização.');
     }
   }
 
@@ -57,8 +110,6 @@ export class Configuracoes implements OnInit {
       return;
     }
 
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-
     this.currentUser = this.authService.getLoggedInUser();
 
     if (this.currentUser) {
@@ -68,5 +119,19 @@ export class Configuracoes implements OnInit {
     } else {
       console.log('Nenhum usuário logado ou token inválido.');
     }
+  }
+
+  enableNameInput() {
+    this.userForm.get('nameUser')?.enable();
+  }
+
+  enableEmailInput() {
+    this.userForm.get('emailUser')?.enable();
+  }
+
+  enablePasswordsInput() {
+    this.userForm.get('passwordUser')?.enable();
+    this.userForm.get('newPasswordUser')?.enable();
+    this.userForm.get('confirmPasswordUser')?.enable();
   }
 }

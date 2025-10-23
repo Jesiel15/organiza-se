@@ -5,31 +5,58 @@
     <h1>Configurações</h1>
 
     <form [formGroup]="userForm" (ngSubmit)="onUpdate()">
-      <div class="field">
-        <input
-          pInputText
-          type="text"
-          placeholder="Nome do usuário"
-          formControlName="nameUser"
-        />
+      <div class="input-with-edit-button">
+        <div class="field">
+          <input
+            pInputText
+            type="text"
+            placeholder="Nome do usuário"
+            formControlName="nameUser"
+          />
+        </div>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-text p-button-lg editar"
+          (click)="enableNameInput()"
+        ></button>
       </div>
 
-      <div class="field">
-        <input
-          pInputText
-          type="text"
-          placeholder="Email do usuário"
-          formControlName="emailUser"
-        />
+      <div class="input-with-edit-button">
+        <div class="field">
+          <input
+            pInputText
+            type="text"
+            placeholder="Email do usuário"
+            formControlName="emailUser"
+          />
+        </div>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-text p-button-lg editar"
+          (click)="enableEmailInput()"
+        ></button>
       </div>
 
-      <div class="field">
-        <input
-          pInputText
-          type="password"
-          placeholder="Senha do usuário"
-          formControlName="passwordUser"
-        />
+      <div class="input-with-edit-button">
+        <div class="field">
+          <input
+            pInputText
+            type="password"
+            placeholder="Senha do usuário"
+            formControlName="passwordUser"
+          />
+        </div>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-text p-button-lg editar"
+          (click)="enablePasswordsInput()"
+        ></button>
       </div>
 
       <div class="field">
