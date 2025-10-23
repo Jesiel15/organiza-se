@@ -196,4 +196,24 @@ export class Configuracoes implements OnInit {
     this.userForm.get('newPasswordUser')?.enable();
     this.userForm.get('confirmPasswordUser')?.enable();
   }
+
+  resetPasswordsInput() {
+    this.userForm.get('passwordUser')?.reset();
+    this.userForm.get('newPasswordUser')?.reset();
+    this.userForm.get('confirmPasswordUser')?.reset();
+  }
+
+  disableAllInput() {
+    this.userForm.get('nameUser')?.disable();
+    this.userForm.get('emailUser')?.disable();
+    this.userForm.get('passwordUser')?.disable();
+    this.userForm.get('newPasswordUser')?.disable();
+    this.userForm.get('confirmPasswordUser')?.disable();
+  }
+
+  cancelar() {
+    this.disableAllInput();
+    this.resetPasswordsInput();
+    this.loadUserData();
+  }
 }

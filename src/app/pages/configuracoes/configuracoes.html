@@ -20,6 +20,7 @@
           icon="pi pi-pencil"
           class="p-button-rounded p-button-text p-button-lg editar"
           (click)="enableNameInput()"
+          *ngIf="!userForm.get('nameUser')?.enabled"
         ></button>
       </div>
 
@@ -38,6 +39,7 @@
           icon="pi pi-pencil"
           class="p-button-rounded p-button-text p-button-lg editar"
           (click)="enableEmailInput()"
+          *ngIf="!userForm.get('emailUser')?.enabled"
         ></button>
       </div>
 
@@ -56,6 +58,7 @@
           icon="pi pi-pencil"
           class="p-button-rounded p-button-text p-button-lg editar"
           (click)="enablePasswordsInput()"
+          *ngIf="!userForm.get('passwordUser')?.enabled"
         ></button>
       </div>
 
@@ -82,6 +85,14 @@
         type="submit"
         label="Salvar Alterações"
         class="btn-adicionar"
+      ></button>
+
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        class="btn-cancelar"
+        (click)="cancelar()"
       ></button>
     </form>
   </div>

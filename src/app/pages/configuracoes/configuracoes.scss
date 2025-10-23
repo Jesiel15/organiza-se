@@ -8,6 +8,22 @@
     padding: 20px;
     border-radius: 6px;
     min-height: 80vh;
+
+    .btn-cancelar {
+      width: 100%;
+      max-width: 200px;
+      margin-bottom: 1rem;
+      margin-left: 1rem;
+      background-color: var(--color-red);
+      border-color: var(--color-red);
+      color: var(--color-white);
+
+      &:hover {
+        background-color: rgba(var(--color-red-rgb), 0.7);
+        border-color: rgba(var(--color-red-rgb), 0.5);
+        color: var(--color-black);
+      }
+    }
   }
 }
 
@@ -68,22 +84,6 @@ textarea[pInputTextarea],
   background-color: var(--color-neon-green);
   border-color: var(--color-neon-green);
   color: var(--color-white);
-}
-
-.btn-cancelar {
-  width: 100%;
-  max-width: 200px;
-  margin-bottom: 1rem;
-  margin-left: 1rem;
-  background-color: var(--color-red);
-  border-color: var(--color-red);
-  color: var(--color-white);
-
-  &:hover {
-    background-color: rgba(var(--color-red-rgb), 0.7);
-    border-color: rgba(var(--color-red-rgb), 0.5);
-    color: var(--color-black);
-  }
 }
 
 ::ng-deep {
