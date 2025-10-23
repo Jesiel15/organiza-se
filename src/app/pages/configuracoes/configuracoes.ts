@@ -23,7 +23,10 @@ export class Configuracoes implements OnInit {
   ) {
     this.userForm = this.fb.group({
       nameUser: [{ value: '', disabled: true }, [Validators.required]],
-      emailUser: [{ value: '', disabled: true }, [Validators.email]],
+      emailUser: [
+        { value: '', disabled: true },
+        [Validators.email, Validators.required],
+      ],
       passwordUser: [{ value: '', disabled: true }, [Validators.required]],
       newPasswordUser: [{ value: '', disabled: true }, [Validators.required]],
       confirmPasswordUser: [
@@ -32,74 +35,134 @@ export class Configuracoes implements OnInit {
       ],
     });
   }
+
   ngOnInit(): void {
     this.loadUserData();
   }
 
   onUpdate() {
-    if (
-      this.userForm.get('nameUser')?.enabled ||
-      this.userForm.get('emailUser')?.enabled
-    ) {
-      const nameControl = this.userForm.get('nameUser');
-      const emailControl = this.userForm.get('emailUser');
+    let updateSent = false;
+    const token = localStorage.getItem('token');
 
-      const nameEnabledAndWithValue =
-        nameControl?.enabled && nameControl.value.trim().length > 0;
-      const emailEnabledAndWithValue =
-        emailControl?.enabled && emailControl.value.trim().length > 0;
+    if (!token) {
+      console.warn('Token não encontrado. Redirecionando para login.');
+      this.router.navigate(['/login']);
+      return;
+    }
 
-      if (nameEnabledAndWithValue || emailEnabledAndWithValue) {
-        if (this.userForm.valid) {
-          const token = localStorage.getItem('token');
-          if (!token) {
-            console.warn('Token não encontrado.');
-            return;
-          }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
 
-          const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          });
+    const nameControl = this.userForm.get('nameUser');
+    const emailControl = this.userForm.get('emailUser');
 
-          const payload: any = {};
+    const nameEnabled = nameControl?.enabled;
+    const emailEnabled = emailControl?.enabled;
 
-          if (nameEnabledAndWithValue) {
-            payload.name = nameControl?.value;
-          }
-          if (emailEnabledAndWithValue) {
-            payload.email = emailControl?.value;
-          }
+    // VERIFICA SE PELO MENOS UM DOS CAMPOS (NOME/EMAIL) ESTÁ HABILITADO
+    if (nameEnabled || emailEnabled) {
+      // Se estiver habilitado, verificamos se os valores são válidos
+      const isNameValid =
+        !nameEnabled ||
+        (nameControl?.value.trim().length > 0 && nameControl.valid);
+      const isEmailValid =
+        !emailEnabled ||
+        (emailControl?.value.trim().length > 0 && emailControl.valid);
 
+      if (isNameValid && isEmailValid) {
+        updateSent = true;
+        const payload: any = {};
+        // Adiciona apenas os valores que foram habilitados
+        if (nameEnabled) {
+          payload.name = nameControl?.value;
+        }
+        if (emailEnabled) {
+          payload.email = emailControl?.value;
+        }
+
+        // A requisição só é enviada se houver pelo menos um campo habilitado E com valor
+        if (Object.keys(payload).length > 0) {
           this.http
             .patch<any>(`${environmentDev.apiUrl}/user/emailname`, payload, {
               headers: headers,
             })
             .subscribe({
-              next: (res) => {
+              next: () => {
                 alert('Perfil atualizado com sucesso! (Nome/Email)');
                 this.userForm.get('nameUser')?.disable();
                 this.userForm.get('emailUser')?.disable();
               },
               error: (err) => {
-                console.error('Erro na atualização:', err);
-                const errorMessage =
-                  err.error?.msg || 'Erro desconhecido ao atualizar.';
-                alert(`Erro: ${errorMessage}`);
+                console.error('Erro na atualização de Nome/Email:', err);
+                alert(
+                  `Erro ao atualizar Nome/Email: ${
+                    err.error?.msg || 'Erro desconhecido'
+                  }`
+                );
               },
             });
-        } else {
-          alert(
-            'Os dados preenchidos não são válidos. Verifique o formato do email.'
-          );
         }
       } else {
-        alert(
-          'Preencha um valor válido nos campos habilitados (Nome ou Email) para atualizar.'
-        );
+        alert('Preencha corretamente os campos habilitados (Nome e Email).');
+        return; // Interrompe se a validação de nome/email falhar
       }
-    } else {
-      console.log('Nenhum campo de nome ou email habilitado para atualização.');
+    }
+
+    const passwordControl = this.userForm.get('passwordUser');
+    const newPasswordControl = this.userForm.get('newPasswordUser');
+    const confirmPasswordControl = this.userForm.get('confirmPasswordUser');
+
+    // VERIFICA SE PELO MENOS O CAMPO DA SENHA ATUAL ESTÁ HABILITADO
+    if (passwordControl?.enabled) {
+      if (
+        passwordControl.valid &&
+        newPasswordControl?.valid &&
+        confirmPasswordControl?.valid
+      ) {
+        if (newPasswordControl.value !== confirmPasswordControl.value) {
+          alert('A nova senha e a confirmação de senha não coincidem.');
+          return;
+        }
+        updateSent = true;
+        const passwordPayload = {
+          password: passwordControl.value,
+          newPassword: newPasswordControl.value,
+        };
+
+        this.http
+          .put<any>(`${environmentDev.apiUrl}/user/password`, passwordPayload, {
+            headers: headers,
+          })
+          .subscribe({
+            next: () => {
+              alert(
+                'Senha atualizada com sucesso! Por favor, faça login novamente.'
+              );
+              this.authService.logout();
+              this.router.navigate(['/login']);
+            },
+            error: (err) => {
+              console.error('Erro na atualização de Senha:', err);
+              alert(
+                `Erro ao atualizar senha: ${
+                  err.error?.msg || 'Erro desconhecido'
+                }`
+              );
+              passwordControl.reset();
+              newPasswordControl?.reset();
+              confirmPasswordControl?.reset();
+            },
+          });
+      } else {
+        alert('Preencha corretamente os três campos de senha.');
+        return; // Interrompe se a validação de senha falhar
+      }
+    }
+
+    if (!updateSent) {
+      console.log('Nenhum campo habilitado/preenchido para atualização.');
     }
   }
 
@@ -113,7 +176,6 @@ export class Configuracoes implements OnInit {
     this.currentUser = this.authService.getLoggedInUser();
 
     if (this.currentUser) {
-      console.log('Configuração Usuário logado: ', this.currentUser);
       this.userForm.get('nameUser')?.setValue(this.currentUser.name);
       this.userForm.get('emailUser')?.setValue(this.currentUser.email);
     } else {
