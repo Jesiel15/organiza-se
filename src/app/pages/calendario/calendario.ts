@@ -6,6 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import allLocales from '@fullcalendar/core/locales-all';
 import { DatePipe } from '@angular/common';
 import { FullCalendarComponent } from '@fullcalendar/angular';
+import { environmentDev } from '../../utils/environment';
 
 @Component({
   selector: 'app-calendario',
@@ -78,12 +79,11 @@ export class Calendario implements OnInit {
       return;
     }
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
-
     forkJoin({
-      expenses: this.http.get<any[]>('http://localhost:3000/expenses', {
+      expenses: this.http.get<any[]>(`${environmentDev.apiUrl}/expenses`, {
         headers,
       }),
-      revenues: this.http.get<any[]>('http://localhost:3000/revenues', {
+      revenues: this.http.get<any[]>(`${environmentDev.apiUrl}/revenues`, {
         headers,
       }),
     }).subscribe({

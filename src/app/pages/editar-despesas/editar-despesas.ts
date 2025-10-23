@@ -9,6 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { IconPickerDialog } from '../../components/icon-picker-dialog/icon-picker-dialog';
 import { catchError, take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { environmentDev } from '../../utils/environment';
 
 @Component({
   selector: 'app-editar-despesas',
@@ -67,7 +68,7 @@ export class EditarDespesas implements OnInit {
     // Usa monthYear e expenseId na URL
     this.http
       .get(
-        `http://localhost:3000/expenses/${this.monthYear}/${this.expenseId}`,
+        `${environmentDev.apiUrl}/expenses/${this.monthYear}/${this.expenseId}`,
         { headers }
       )
       .pipe(
@@ -117,7 +118,7 @@ export class EditarDespesas implements OnInit {
 
     this.http
       .put(
-        `http://localhost:3000/expenses/${this.monthYear}/${this.expenseId}`,
+        `${environmentDev.apiUrl}/expenses/${this.monthYear}/${this.expenseId}`,
         updatedExpense,
         {
           headers,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { forkJoin } from 'rxjs'; // Importe o forkJoin
+import { forkJoin } from 'rxjs';
+import { environmentDev } from '../../utils/environment';
 
 @Component({
   selector: 'app-grafico',
@@ -31,12 +32,11 @@ export class Grafico implements OnInit {
 
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-    // Use forkJoin para esperar ambas as requisições
     forkJoin({
-      expenses: this.http.get<any[]>('http://localhost:3000/expenses', {
+      expenses: this.http.get<any[]>(`${environmentDev.apiUrl}/expenses`, {
         headers,
       }),
-      revenues: this.http.get<any[]>('http://localhost:3000/revenues', {
+      revenues: this.http.get<any[]>(`${environmentDev.apiUrl}/revenues`, {
         headers,
       }),
     }).subscribe({

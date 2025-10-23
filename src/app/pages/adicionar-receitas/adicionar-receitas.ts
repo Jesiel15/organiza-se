@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IconPickerDialog } from '../../components/icon-picker-dialog/icon-picker-dialog';
 import { catchError, throwError } from 'rxjs';
+import { environmentDev } from '../../utils/environment';
 
 @Component({
   selector: 'app-adicionar-receitas',
@@ -82,7 +83,7 @@ export class AdicionarReceitas {
     const newRevenue = this.revenuesForm.value;
 
     this.http
-      .post('http://localhost:3000/revenues', newRevenue, { headers })
+      .post(`${environmentDev.apiUrl}/revenues`, newRevenue, { headers })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error('Erro ao adicionar receita:', error);

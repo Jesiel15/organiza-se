@@ -6,8 +6,9 @@ import {
   Validators,
   ValidatorFn,
   AbstractControl,
-} from '@angular/forms'; // Import AbstractControl and ValidatorFn
+} from '@angular/forms';
 import { Router } from '@angular/router';
+import { environmentDev } from '../../utils/environment';
 
 @Component({
   selector: 'app-cadastro',
@@ -70,7 +71,7 @@ export class Cadastro {
   };
 
   goToLogin() {
-    this.router.navigate(['/login']); // navega para a home
+    this.router.navigate(['/login']);
   }
 
   onSubmit() {
@@ -88,11 +89,10 @@ export class Cadastro {
     }
 
     this.http
-      .post<any>('http://localhost:3000/register', this.cadastroForm.value)
+      .post<any>(`${environmentDev.apiUrl}/register`, this.cadastroForm.value)
       .subscribe({
         next: (res) => {
           // alert('Cadastro realizado com sucesso!');
-          // console.log('#### resp register:', res);
           localStorage.setItem('token', res.token);
           this.router.navigate(['/home']);
         },

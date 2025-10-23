@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { IconPickerDialog } from '../../components/icon-picker-dialog/icon-picker-dialog';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { environmentDev } from '../../utils/environment';
 
 @Component({
   selector: 'app-adicionar-despesas',
@@ -72,7 +73,7 @@ export class AdicionarDespesas {
     const newExpense = this.expenseForm.value;
 
     this.http
-      .post('http://localhost:3000/expenses', newExpense, { headers })
+      .post<any[]>(`${environmentDev.apiUrl}/expenses`, newExpense, { headers })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error('Erro ao adicionar despesa:', error);

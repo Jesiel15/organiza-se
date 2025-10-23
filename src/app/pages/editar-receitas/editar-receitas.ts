@@ -9,6 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router'; // Importe ActivatedRo
 import { IconPickerDialog } from '../../components/icon-picker-dialog/icon-picker-dialog';
 import { catchError, take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { environmentDev } from '../../utils/environment';
 
 @Component({
   selector: 'app-editar-receitas',
@@ -70,7 +71,7 @@ export class EditarReceitas implements OnInit {
     // Usa monthYear e revenueId na URL
     this.http
       .get(
-        `http://localhost:3000/revenues/${this.monthYear}/${this.revenueId}`,
+        `${environmentDev.apiUrl}/revenues/${this.monthYear}/${this.revenueId}`,
         { headers }
       )
       .pipe(
@@ -120,7 +121,7 @@ export class EditarReceitas implements OnInit {
 
     this.http
       .put(
-        `http://localhost:3000/revenues/${this.monthYear}/${this.revenueId}`,
+        `${environmentDev.apiUrl}/revenues/${this.monthYear}/${this.revenueId}`,
         updatedRevenue,
         {
           headers,

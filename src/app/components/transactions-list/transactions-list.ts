@@ -6,6 +6,7 @@ import { TransactionsService } from '../../service/transactions.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { finalize } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { environmentDev } from '../../utils/environment';
 
 @Component({
   selector: 'app-transactions-list',
@@ -65,7 +66,7 @@ export class TransactionsList implements OnInit {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     this.http
-      .get<any[]>('http://localhost:3000/expenses', { headers })
+      .get<any[]>(`${environmentDev.apiUrl}/expenses`, { headers })
       .subscribe({
         next: (data) => {
           this.allExpenses = data.map((exp) => ({
@@ -91,7 +92,7 @@ export class TransactionsList implements OnInit {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     this.http
-      .get<any[]>('http://localhost:3000/revenues', { headers })
+      .get<any[]>(`${environmentDev.apiUrl}/revenues`, { headers })
       .subscribe({
         next: (data) => {
           this.allRevenues = data.map((exp) => ({
@@ -197,7 +198,7 @@ export class TransactionsList implements OnInit {
     const monthYear = this.getMonthYearKey(new Date(expense.dateExpense));
 
     this.http
-      .delete(`http://localhost:3000/expenses/${monthYear}/${expense.id}`, {
+      .delete(`${environmentDev.apiUrl}/expenses/${monthYear}/${expense.id}`, {
         headers,
       })
       .pipe(finalize(() => (this.isLoading = false)))
@@ -228,7 +229,7 @@ export class TransactionsList implements OnInit {
     const monthYear = this.getMonthYearKey(new Date(revenue.dateRevenue));
 
     this.http
-      .delete(`http://localhost:3000/revenues/${monthYear}/${revenue.id}`, {
+      .delete(`${environmentDev.apiUrl}/revenues/${monthYear}/${revenue.id}`, {
         headers,
       })
       .pipe(finalize(() => (this.isLoading = false)))

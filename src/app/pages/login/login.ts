@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environmentDev } from '../../utils/environment';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,7 @@ export class Login {
     if (this.loginForm.invalid) return;
 
     this.http
-      .post<any>('http://localhost:3000/login', this.loginForm.value)
+      .post<any>(`${environmentDev.apiUrl}/login`, this.loginForm.value)
       .subscribe({
         next: (res) => {
           // alert('Login realizado com sucesso!');
