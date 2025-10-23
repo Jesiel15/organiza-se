@@ -2,7 +2,60 @@
   <app-sidebar-menu></app-sidebar-menu>
 
   <div class="content">
-    <!-- Aqui vai o conteúdo da tela Home, como no seu layout -->
     <h1>Configurações</h1>
+
+    <form [formGroup]="userForm" (ngSubmit)="onUpdate()">
+      <div class="field">
+        <input
+          pInputText
+          type="text"
+          placeholder="Nome do usuário"
+          formControlName="nameUser"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          pInputText
+          type="text"
+          placeholder="Email do usuário"
+          formControlName="emailUser"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          pInputText
+          type="password"
+          placeholder="Senha do usuário"
+          formControlName="passwordUser"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          pInputText
+          type="password"
+          placeholder="Nova senha do usuário"
+          formControlName="newPasswordUser"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          pInputText
+          type="password"
+          placeholder="Confirmar senha do usuário"
+          formControlName="confirmPasswordUser"
+        />
+      </div>
+
+      <button
+        pButton
+        type="submit"
+        label="Salvar Alterações"
+        class="btn-adicionar"
+      ></button>
+    </form>
   </div>
 </div>
