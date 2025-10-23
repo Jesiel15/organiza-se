@@ -3,6 +3,7 @@ import { AuthService } from '../../service/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environmentDev } from '../../utils/environment';
 
 @Component({
   selector: 'app-suporte',
@@ -27,6 +28,7 @@ export class Suporte implements OnInit {
       messageUser: ['', Validators.required],
     });
   }
+
   ngOnInit() {
     this.currentUser = this.authService.getLoggedInUser();
     if (this.currentUser) {
@@ -36,5 +38,27 @@ export class Suporte implements OnInit {
     }
   }
 
-  onUpdate() {}
+  onUpdate() {
+    const token = localStorage.getItem('token');
+
+    this.http
+      .post(
+        `${environmentDev.apiUrl}/support/email`,
+        {
+          name: this.emailForm.get('nameUser')?.value,
+          email: this.emailForm.get('emailUser')?.value,
+          message: this.emailForm.get('messageUser')?.value,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .subscribe({
+        next: () => {
+          alert('Mensagem enviada com sucesso!');
+        },
+        error: (err) =>
+          alert(`Erro: ${err.error?.msg || 'Falha ao enviar mensagem'}`),
+      });
+  }
 }
