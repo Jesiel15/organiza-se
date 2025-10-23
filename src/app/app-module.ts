@@ -28,6 +28,7 @@ import ptBr from '@angular/common/locales/pt';
 import { ChartModule } from 'primeng/chart';
 import { CalendarioModule } from './pages/calendario/calendario-module';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { SuporteModule } from './pages/suporte/suporte-module';
 
 const routes: Routes = [
   { path: '', component: Grafico }, // Rota padrão, ajuste conforme sua necessidade
@@ -51,6 +52,7 @@ registerLocaleData(ptBr);
     HomeModule,
     GraficoModule,
     CalendarioModule,
+    SuporteModule,
 
     // PrimeNG
     CardModule,

@@ -12,6 +12,7 @@ import { EditarDespesas } from './pages/editar-despesas/editar-despesas';
 import { EditarReceitas } from './pages/editar-receitas/editar-receitas';
 import { Configuracoes } from './pages/configuracoes/configuracoes';
 import { Calendario } from './pages/calendario/calendario';
+import { Suporte } from './pages/suporte/suporte';
 
 const routes: Routes = [
   {
@@ -42,6 +43,11 @@ const routes: Routes = [
   {
     path: 'configuracoes',
     component: Configuracoes,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'suporte',
+    component: Suporte,
     canActivate: [AuthGuard],
   },
   {

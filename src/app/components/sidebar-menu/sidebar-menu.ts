@@ -67,4 +67,8 @@ export class SidebarMenu implements OnInit {
   navegar(route: string) {
     this.router.navigate([route]);
   }
+
+  navigateToSupport() {
+    this.router.navigate(['/suporte']);
+  }
 }

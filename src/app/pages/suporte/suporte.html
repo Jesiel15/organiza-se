@@ -1,0 +1,46 @@
+<div class="container">
+  <app-sidebar-menu></app-sidebar-menu>
+
+  <div class="content">
+    <h3>Olá,</h3>
+    <h1>
+      {{ currentUser.name }}
+    </h1>
+
+    <form [formGroup]="emailForm" (ngSubmit)="onUpdate()">
+      <div class="field">
+        <input
+          pInputText
+          type="text"
+          placeholder="Nome completo"
+          formControlName="nameUser"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          pInputText
+          type="text"
+          placeholder="Seu e-mail"
+          formControlName="emailUser"
+        />
+      </div>
+
+      <div class="field">
+        <textarea
+          pInputTextarea
+          placeholder="Sua mensagem"
+          formControlName="messageUser"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <button
+        pButton
+        type="submit"
+        label="Enviar email"
+        class="btn-adicionar"
+      ></button>
+    </form>
+  </div>
+</div>

@@ -20,7 +20,17 @@
   </nav>
 
   <div class="suporte">
-    <i class="pi pi-phone"></i>
-    <span>Suporte</span>
+    <nav>
+      <ul>
+        <li
+          [class]="'menu-item'"
+          [class.active]="activeRoute === '/suporte'"
+          (click)="navigateToSupport()"
+        >
+          <i class="pi pi-phone"></i>
+          <span>Suporte</span>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>

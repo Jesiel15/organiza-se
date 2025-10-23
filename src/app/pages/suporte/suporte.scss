@@ -1,0 +1,111 @@
+.container {
+  display: flex;
+  gap: 20px;
+  background-color: var(--color-background-home);
+
+  .content {
+    flex: 1;
+    padding: 20px;
+    border-radius: 6px;
+    min-height: 80vh;
+
+    .btn-cancelar {
+      width: 100%;
+      max-width: 200px;
+      margin-bottom: 1rem;
+      margin-left: 1rem;
+      background-color: var(--color-red);
+      border-color: var(--color-red);
+      color: var(--color-white);
+
+      &:hover {
+        background-color: rgba(var(--color-red-rgb), 0.7);
+        border-color: rgba(var(--color-red-rgb), 0.5);
+        color: var(--color-black);
+      }
+    }
+  }
+}
+
+h1 {
+  color: var(--color-black);
+  margin-top: 0;
+}
+
+.input-with-edit-button {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.p-button-rounded.editar {
+  color: var(--color-neon-green);
+  width: 2.4rem;
+  height: 2em;
+  margin-top: 5px;
+  &:hover {
+    color: var(--color-black);
+    background-color: rgba(var(--color-green-rgb), 0.5);
+  }
+}
+
+.field {
+  display: flex;
+  width: 50%;
+  margin-bottom: 15px;
+}
+
+input[pInputText],
+textarea[pInputTextarea],
+.p-colorpicker-trigger {
+  flex-grow: 1;
+  margin-left: 8px;
+  padding: 0.75rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #495057;
+  background-color: #ffffff;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin-left: 0;
+
+  &:focus {
+    border-color: var(--primary-color, #6366f1);
+    box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+    outline: 0 none;
+  }
+}
+
+.btn-adicionar {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 1rem;
+  background-color: var(--color-neon-green);
+  border-color: var(--color-neon-green);
+  color: var(--color-white);
+}
+
+::ng-deep {
+  .p-inputtext {
+    flex-grow: 1;
+    padding: 0.75rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #495057;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-left: 0;
+
+    &:focus {
+      border-color: var(--primary-color, #6366f1) !important;
+      box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25) !important;
+      outline: 0 none;
+    }
+  }
+
+  input[pInputText]:disabled {
+    color: #a0a0a0;
+    background-color: #f0f0f0;
+    border-color: #e0e0e0;
+  }
+}
