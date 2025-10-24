@@ -143,3 +143,145 @@
   padding-left: 12px;
   padding-right: 8px;
 }
+
+// === Container do Toggle ===
+.theme-toggle-container {
+  // width: 100%;
+  // max-width: 90px;
+  // margin: 1.5rem auto 0.5rem;
+  display: flex;
+  // align-items: flex-end;
+  justify-content: flex-end;
+  padding-right: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+// === Estilização do Toggle Switch Versão 2 ===
+.dark-mode-switch-v2 {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 40px;
+}
+
+/* Esconde o checkbox HTML padrão */
+.dark-mode-switch-v2 input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* O "switch-slider" (o fundo do interruptor) */
+.switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e0e0e0; // Fundo claro (light mode)
+  transition: 0.4s;
+  border-radius: 34px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05); // Sombra interna suave
+
+  // Configura o display para posicionar os ícones de background
+  display: flex;
+  align-items: center;
+  justify-content: space-between; // Para o background icons
+  padding: 0 10px; // Padding interno para os ícones de background
+}
+
+/* O "handle" (o pingo/círculo que move) */
+.switch-slider::before {
+  position: absolute;
+  content: ""; // Conteúdo vazio pois o ícone está dentro do label
+  height: 38px;
+  width: 38px;
+  left: 1px;
+  bottom: 1px;
+  background: linear-gradient(
+    135deg,
+    #ffc400 0%,
+    #fffb00 100%
+  ); /* Gradiente laranja/pêssego da imagem */
+  transition: 0.4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); // Sombra externa do handle
+  z-index: 1;
+  display: flex; // Para centralizar o ícone interno
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ícone que se move dentro do handle */
+.theme-handle-icon {
+  position: absolute; // Posição absoluta dentro do slider
+  font-size: 1.4rem; // Tamanho do ícone
+  color: var(--color-black); // Cor branca para o ícone do handle
+  z-index: 2; // Acima do handle
+  transition: transform 0.4s ease, left 0.4s ease;
+  left: 2px; // Posição inicial do ícone (dentro do handle esquerdo)
+  line-height: 1; // Para garantir alinhamento vertical
+  display: flex; // Para centralizar
+  align-items: center;
+  justify-content: center;
+  height: 38px; // Mesma altura do handle para centralizar
+  width: 38px; // Mesma largura do handle para centralizar
+}
+
+/* Ícones de background no slider (Lua no light, Sol no dark) */
+.theme-background-icon {
+  font-size: 1.2rem;
+  color: var(--color-gray); // Cor cinza para o ícone de background inativo
+  transition: opacity 0.4s;
+  opacity: 1; // Visível por padrão
+  line-height: 1;
+}
+
+/* Esconder o ícone de background do MODO CLARO (sol) quando o switch está no modo CLARO */
+.light-mode-bg-icon {
+  opacity: 0; // Começa invisível (sol fica no handle)
+  visibility: hidden;
+}
+
+/* Esconder o ícone de background do MODO ESCURO (lua) quando o switch está no modo ESCURO */
+.dark-mode-bg-icon {
+  opacity: 1; // Visível (lua fica no background)
+  visibility: visible;
+}
+
+/* Quando o input está CHECKED (Modo Escuro ativado) */
+input:checked + .switch-slider {
+  background-color: #333333; // Fundo escuro do switch
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Move o handle para a direita quando CHECKED */
+input:checked + .switch-slider::before {
+  transform: translateX(
+    50px
+  ); // Move para a direita (90px - 38px - 1px - 1px = 50px de movimento)
+  background: linear-gradient(
+    135deg,
+    #0c2849 0%,
+    #2881e4 100%
+  ); /* Gradiente escuro para o handle no dark mode */
+}
+
+/* Move o ícone interno do handle junto com ele */
+input:checked + .switch-slider .theme-handle-icon {
+  transform: translateX(50px);
+  left: 1px; // Reset para a posição inicial do ícone dentro do handle movido
+}
+
+/* Ícones de background: Controlar visibilidade quando CHECKED */
+input:checked + .switch-slider .light-mode-bg-icon {
+  opacity: 1; // Sol aparece no background
+  visibility: visible;
+}
+
+input:checked + .switch-slider .dark-mode-bg-icon {
+  opacity: 0; // Lua do background some
+  visibility: hidden;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DOCUMENT, Inject, OnInit, Renderer2 } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { filter } from 'rxjs/operators';
@@ -12,13 +12,17 @@ import { filter } from 'rxjs/operators';
 })
 export class SidebarMenu implements OnInit {
   activeRoute: string = '';
+  isDarkMode: boolean = false;
 
   constructor(
     private router: Router,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   ngOnInit() {
+    this.loadTheme();
     this.updateActiveRoute(this.router.url);
 
     this.router.events
@@ -70,5 +74,34 @@ export class SidebarMenu implements OnInit {
 
   navigateToSupport() {
     this.router.navigate(['/suporte']);
+  }
+
+  private loadTheme(): void {
+    // Tenta obter o estado do tema do armazenamento local. Padrão é 'false' (light)
+    const storedTheme = localStorage.getItem('theme');
+    this.isDarkMode = storedTheme === 'dark';
+
+    // Aplica a classe imediatamente
+    this.applyTheme(this.isDarkMode);
+  }
+
+  // C. Novo Método: Altera o estado do tema
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode; // Inverte o estado
+
+    this.applyTheme(this.isDarkMode);
+
+    // Salva a preferência no Local Storage
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+  }
+
+  // D. Novo Método: Aplica a classe ao body
+  private applyTheme(isDark: boolean): void {
+    const body = this.document.body; // Pega o elemento body
+    if (isDark) {
+      this.renderer.addClass(body, 'dark-mode');
+    } else {
+      this.renderer.removeClass(body, 'dark-mode');
+    }
   }
 }

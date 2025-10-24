@@ -26,6 +26,7 @@ html {
   --color-neon-green: #16df7f;
   --color-sky-blue-suave: #e0f2fe;
   --color-sky-blue: #2881e4;
+  --color-calendario: var(--color-sky-blue-suave);
 
   // === Base Colours ===
   --color-white: #ffffff;
@@ -55,4 +56,27 @@ html {
   // === RGB OPACITY
   --color-green-rgb: 70, 155, 136;
   --color-red-rgb: 224, 83, 61;
+}
+
+.dark-mode {
+  // === Brand Colours ===
+  --color-red: #e0533d;
+  --color-red-suave: #fecaca;
+  --color-purple: #9da7d0;
+  --color-green: #469b88;
+  --color-blue: #377cc8;
+  --color-pink: #e78c9d;
+  --color-lilac: #d9d8f7;
+  --color-neon-green: #16df7f;
+  --color-sky-blue-suave: #e0f2fe;
+  --color-sky-blue: #2881e4;
+  --color-calendario: #122c3d;
+
+  // === Base Colours ===
+  --color-white: #404040;
+  --color-black: #ffffff;
+  --color-yellow: #eed868;
+  --color-gray: #ffffff;
+  --color-background: #404040;
+  --color-background-home: #303030;
 }
