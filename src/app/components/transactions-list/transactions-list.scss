@@ -333,3 +333,27 @@ h1 {
     }
   }
 }
+
+// /* Adicione ou modifique */
+// .expense-item {
+//   display: flex;
+//   align-items: center;
+//   padding: 0.8rem 0;
+//   border-bottom: 1px solid #eee;
+//   transition: opacity 0.3s ease; /* Para um efeito suave */
+// }
+
+// /* Estilo visual para despesas pagas */
+// .expense-item.paid {
+//   opacity: 0.5; /* Deixa mais transparente para indicar "completo" */
+// }
+
+// .expense-item.paid .expense-name,
+// .expense-item.paid .expense-amount,
+// .expense-item.paid .expense-date {
+//   text-decoration: line-through; /* Efeito de tachado */
+// }
+
+// .paid-checkbox {
+//   margin-right: 1rem;
+// }

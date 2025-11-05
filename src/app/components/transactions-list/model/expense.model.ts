@@ -6,6 +6,7 @@ interface Expense {
   icon: string;
   color: string;
   anotation: string;
+  isPaid: boolean;
 }
 
 // icon:'pi pi-chart-bar'

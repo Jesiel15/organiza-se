@@ -31,7 +31,18 @@
         ></button>
 
         <div class="expenses-list">
-          <div class="expense-item" *ngFor="let expense of expenses">
+          <div
+            class="expense-item"
+            *ngFor="let expense of expenses"
+            [class.paid]="expense.isPaid"
+          >
+            <p-checkbox
+              [(ngModel)]="expense.isPaid"
+              [binary]="true"
+              (onChange)="toggleExpensePaidStatus(expense)"
+              styleClass="paid-checkbox"
+            ></p-checkbox>
+
             <div
               class="expense-icon"
               [ngStyle]="{ 'background-color': expense.color }"

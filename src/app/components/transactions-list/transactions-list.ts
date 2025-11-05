@@ -1,4 +1,3 @@
-// transactions-list.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -73,11 +72,51 @@ export class TransactionsList implements OnInit {
             ...exp,
             id: exp.id || exp._id,
             dateExpense: new Date(exp.dateExpense),
+            isPaid: exp.isPaid || false,
           }));
           this.applyFilter();
         },
         error: (err) => {
           console.error('Erro ao buscar despesas:', err);
+        },
+      });
+  }
+
+  toggleExpensePaidStatus(expense: Expense) {
+    this.isLoading = true;
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.warn('Token não encontrado.');
+      this.isLoading = false;
+      expense.isPaid = !expense.isPaid;
+      return;
+    }
+
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const monthYear = this.getMonthYearKey(new Date(expense.dateExpense));
+    const url = `${environmentDev.apiUrl}/expenses/${monthYear}/${expense.id}`;
+
+    const payload = { isPaid: expense.isPaid };
+
+    this.http
+      .patch(url, payload, { headers })
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: `Status da despesa "${expense.nameExpense}" atualizado!`,
+          });
+        },
+        error: (err) => {
+          expense.isPaid = !expense.isPaid;
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao atualizar status da despesa.',
+          });
+          console.error('Erro ao atualizar status:', err);
         },
       });
   }

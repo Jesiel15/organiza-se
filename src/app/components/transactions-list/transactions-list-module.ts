@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [TransactionsList],
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     ConfirmDialogModule,
     DatePickerModule,
     FormsModule,
+    CheckboxModule,
   ],
   exports: [TransactionsList],
 })
