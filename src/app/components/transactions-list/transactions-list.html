@@ -66,6 +66,8 @@
               type="button"
               icon="pi pi-pencil"
               class="p-button-rounded p-button-text p-button-lg editar"
+              pTooltip="Editar despesa"
+              tooltipPosition="top"
               (click)="goToEditDespesa(expense)"
             ></button>
             <button
@@ -73,7 +75,18 @@
               type="button"
               icon="pi pi-minus-circle"
               class="p-button-rounded p-button-text p-button-lg excluir"
+              pTooltip="Excluir despesa"
+              tooltipPosition="top"
               (click)="openModalExluirDespesa(expense)"
+            ></button>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-arrow-right"
+              class="p-button-rounded p-button-text p-button-lg replicar"
+              pTooltip="Replicar para o próximo mês"
+              tooltipPosition="top"
+              (click)="openModalReplicarDespesa(expense)"
             ></button>
           </div>
         </div>
@@ -116,6 +129,8 @@
               type="button"
               icon="pi pi-pencil"
               class="p-button-rounded p-button-text p-button-lg editar"
+              pTooltip="Editar receita"
+              tooltipPosition="top"
               (click)="goToEditReceita(revenue)"
             ></button>
             <button
@@ -123,7 +138,18 @@
               type="button"
               icon="pi pi-minus-circle"
               class="p-button-rounded p-button-text p-button-lg excluir"
+              pTooltip="Excluir receita"
+              tooltipPosition="top"
               (click)="openModalExluirReceita(revenue)"
+            ></button>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-arrow-right"
+              class="p-button-rounded p-button-text p-button-lg replicar"
+              pTooltip="Replicar para o próximo mês"
+              tooltipPosition="top"
+              (click)="openModalReplicarReceita(revenue)"
             ></button>
           </div>
         </div>

@@ -292,9 +292,78 @@ export class TransactionsList implements OnInit {
       });
   }
 
+  replicarExpense(expense: Expense) {
+    this.isLoading = true;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const monthYear = this.getMonthYearKey(new Date(expense.dateExpense));
+
+    // A lógica de replicar geralmente envia os dados para uma rota que cria
+    // uma cópia no mês seguinte.
+
+    this.http
+      .post(
+        `${environmentDev.apiUrl}/expenses/${monthYear}/${expense.id}/replicate`,
+        {},
+        { headers }
+      )
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: 'Despesa replicada para o próximo mês!',
+          });
+          this.fetchExpenses();
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao replicar a despesa.',
+          });
+          console.error('Erro ao replicar despesa:', err);
+        },
+      });
+  }
+
+  replicarRevenue(revenue: Revenue) {
+    this.isLoading = true;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const monthYear = this.getMonthYearKey(new Date(revenue.dateRevenue));
+
+    this.http
+      .post(
+        `${environmentDev.apiUrl}/revenues/${monthYear}/${revenue.id}/replicate`,
+        {},
+        { headers }
+      )
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: 'Receita replicada para o próximo mês!',
+          });
+          this.fetchRevenues();
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao replicar a receita.',
+          });
+          console.error('Erro ao replicar receita:', err);
+        },
+      });
+  }
+
   openModalExluirDespesa(expense: Expense) {
     this.confirmationService.confirm({
-      message: `Tem certeza que deseja excluir a despesa: <br> <br> <strong>${expense.nameExpense}</strong>?`,
+      message: `Tem certeza que deseja excluir a despesa: <br> <br> <strong>"${expense.nameExpense}"</strong>?`,
       header: 'Excluir despesa',
       acceptLabel: 'Confirmar?',
       rejectLabel: 'Cancelar',
@@ -306,12 +375,36 @@ export class TransactionsList implements OnInit {
 
   openModalExluirReceita(revenue: Revenue) {
     this.confirmationService.confirm({
-      message: `Tem certeza que deseja excluir a receita: <br> <br> <strong>${revenue.nameRevenue}</strong>?`,
+      message: `Tem certeza que deseja excluir a receita: <br> <br> <strong>"${revenue.nameRevenue}"</strong>?`,
       header: 'Excluir receita',
       acceptLabel: 'Confirmar?',
       rejectLabel: 'Cancelar',
       accept: () => {
         this.deleteRevenue(revenue);
+      },
+    });
+  }
+
+  openModalReplicarDespesa(expense: Expense) {
+    this.confirmationService.confirm({
+      message: `Deseja replicar a despesa para o próximo mês: <br> <br> <strong>"${expense.nameExpense}"</strong>?`,
+      header: 'Replicar despesa',
+      acceptLabel: 'Confirmar?',
+      rejectLabel: 'Cancelar',
+      accept: () => {
+        this.replicarExpense(expense);
+      },
+    });
+  }
+
+  openModalReplicarReceita(revenue: Revenue) {
+    this.confirmationService.confirm({
+      message: `Deseja replicar a receita para o próximo mês: <br> <br> <strong>"${revenue.nameRevenue}"</strong>?`,
+      header: 'Replicar receita',
+      acceptLabel: 'Confirmar?',
+      rejectLabel: 'Cancelar',
+      accept: () => {
+        this.replicarRevenue(revenue);
       },
     });
   }

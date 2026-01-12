@@ -56,6 +56,16 @@ p-card {
   }
 }
 
+.p-button-rounded.replicar {
+  color: var(--color-sky-blue);
+  width: 2.2rem;
+  height: 1.8em;
+  &:hover {
+    color: var(--color-black);
+    background-color: #cae2fe;
+  }
+}
+
 .custom-dashed-button {
   display: flex;
   width: 90%;
