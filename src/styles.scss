@@ -51,11 +51,14 @@ html {
   --p-button-text-color: var(--color-white);
   --p-inputtext-color: var(--color-black);
   --p-card-bg: var(--color-white);
-  --p-card-border: 1px solid var(--color-gray);
+  --p-card-border: 1px solid var(--color-red);
 
   // === RGB OPACITY
   --color-green-rgb: 70, 155, 136;
   --color-red-rgb: 224, 83, 61;
+
+  // === Linha do itens na listas DESPESAS/RECEITAS
+  --line-color: 1px solid #cecece;
 }
 
 .dark-mode {
@@ -79,4 +82,7 @@ html {
   --color-gray: #ffffff;
   --color-background: #404040;
   --color-background-home: #303030;
+
+  // === Linha do itens na listas DESPESAS/RECEITAS
+  --line-color: 1px solid #747474;
 }
