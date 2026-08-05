@@ -8,14 +8,47 @@ body {
   color: var(--color-white);
 }
 
-::ng-deep .p-dialog .p-dialog-header {
+::ng-deep .p-dialog-header {
   background-color: var(--color-white);
   color: var(--color-sky-blue);
 }
 
-::ng-deep .p-dialog .p-dialog-content {
+::ng-deep .p-dialog-content {
   background-color: var(--color-white);
   color: var(--color-sky-blue);
+}
+
+::ng-deep .p-dialog-footer {
+  background-color: var(--color-white);
+  color: var(--color-sky-blue);
+}
+
+/* Largura da barra de rolagem */
+.icon-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+// /* Fundo da barra (o "trilho") */
+// .icon-grid::-webkit-scrollbar-track {
+//   background: #e70000;
+//   border-radius: 4px;
+// }
+
+/* Cor do indicador que você arrasta (o "ponteiro") */
+// .icon-grid::-webkit-scrollbar-thumb {
+//   background: var(--color-sky-blue, #5eff00);
+//   border-radius: 4px;
+// }
+
+/* Cor ao passar o mouse por cima da barra */
+// .icon-grid::-webkit-scrollbar-thumb:hover {
+//   background: #f70aff;
+// }
+
+/* Scrollbar da modal Selecionar Ícones */
+::ng-deep .icon-grid {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-sky-blue, --color-sky-blue) var(--scroll-color) !important;
 }
 
 .icon-grid {
