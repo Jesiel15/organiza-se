@@ -87,6 +87,7 @@ export class EditarDespesas implements OnInit {
       .subscribe({
         next: (expense: any) => {
           expense.dateExpense = new Date(expense.dateExpense);
+          expense.valueExpense = this.formatarParaReal(expense.valueExpense);
           this.expenseForm.patchValue(expense);
         },
       });
@@ -183,6 +184,13 @@ export class EditarDespesas implements OnInit {
       minimumFractionDigits: 2,
     }).format(numericValue);
     inputElement.value = formattedValue;
+  }
+
+  formatarParaReal(valor: number): string {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(valor);
   }
 
   voltarParaHome() {
