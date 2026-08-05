@@ -408,4 +408,15 @@ export class TransactionsList implements OnInit {
       },
     });
   }
+
+  toTooltip(valueExpense: number): string {
+    if (valueExpense == null) return '';
+  
+    const formattedValue = new Intl.NumberFormat('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(valueExpense);
+  
+    return `R$ ${formattedValue}`;
+  }
 }
