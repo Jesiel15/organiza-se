@@ -2,42 +2,44 @@
   display: flex;
   gap: 2rem;
   padding-top: 2rem;
+  /* Permite que os cards vão para a linha de baixo em telas pequenas */
+  flex-wrap: wrap; 
 }
 
 p-card {
   background-color: var(--color-white);
   color: var(--color-black);
-  width: 14rem;
-  height: 7rem;
+  /* Troca 'width' por 'min-width' e 'width: fit-content' */
+  min-width: 14rem;
+  width: fit-content;
+  /* Permite que o card cresça em altura se necessário */
+  min-height: 7rem;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
-.despesas {
+/* Regra aplicada a todas as opções de valores */
+.despesas,
+.receitas,
+.saldo,
+.positivo,
+.negativo {
   margin-top: 0.5rem;
-  color: var(--color-red);
   font-size: 24px;
+  white-space: nowrap; /* IMPEDE que o R$ e o número quebrem de linha */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Caso o container ultrapasse a tela, ele coloca "..." em vez de quebrar feio */
+}
+
+.despesas,
+.negativo {
+  color: var(--color-red);
 }
 
 .receitas {
-  margin-top: 0.5rem;
   color: var(--color-sky-blue);
-  font-size: 24px;
 }
 
-.saldo {
-  margin-top: 0.5rem;
-  color: var(--color-neon-green);
-  font-size: 24px;
-}
-
+.saldo,
 .positivo {
-  margin-top: 0.5rem;
   color: var(--color-neon-green);
-  font-size: 24px;
-}
-
-.negativo {
-  margin-top: 0.5rem;
-  color: var(--color-red);
-  font-size: 24px;
 }
