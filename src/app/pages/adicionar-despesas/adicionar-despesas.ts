@@ -134,4 +134,8 @@ export class AdicionarDespesas {
 
     inputElement.value = formattedValue;
   }
+  
+  voltarParaHome() {
+    this.router.navigate(['/home']);
+  }
 }
