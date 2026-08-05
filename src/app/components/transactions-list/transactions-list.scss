@@ -395,3 +395,34 @@ h1 {
   margin-right: 1rem;
   flex-shrink: 0;
 }
+
+/* Estilização completa do p-checkbox */
+::ng-deep .paid-checkbox {
+  /* 1. Estado DESMARCADO */
+  .p-checkbox-box {
+    border-color: var(--line-color) !important;
+    background-color: var(--line-color) !important;
+  }
+
+  /* 2. Estado MARCADO (cobre PrimeNG 16, 17 e 18) */
+  &.p-checkbox-checked .p-checkbox-box,
+  .p-checkbox-box.p-highlight,
+  .p-checkbox-checked .p-checkbox-box {
+    background-color: var(
+      --color-blue
+    ) !important; /* Mude para a cor desejada quando marcado */
+    border-color: var(--line-color) !important;
+  }
+
+  /* 3. ÍCONE do Check (sinal de V) */
+  .p-checkbox-icon,
+  .p-icon {
+    color: var(--line-color) !important;
+  }
+
+  /* 4. HOVER (ao passar o mouse) */
+  &:not(.p-disabled):hover .p-checkbox-box {
+    border-color: var(--color-blue) !important;
+    background-color: var(--color-blue) !important;
+  }
+}
