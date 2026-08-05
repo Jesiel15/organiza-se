@@ -68,14 +68,14 @@ h1 {
   max-width: 200px;
   margin-bottom: 1rem;
   margin-left: 1rem;
-  background-color: var(--color-red);
+  background-color: var(--color-red) ;
   border-color: var(--color-red);
   color: var(--color-white);
 
   &:hover {
-    background-color: rgba(var(--color-red-rgb), 0.7);
-    border-color: rgba(var(--color-red-rgb), 0.5);
-    color: var(--color-black);
+    background-color: rgba(var(--color-red-rgb), 0.7) !important;
+    border-color: rgba(var(--color-red-rgb), 0.5) !important;
+    color: var(--color-black) !important;
   }
 }
 
