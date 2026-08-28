@@ -65,9 +65,8 @@ export class EditarDespesas implements OnInit {
 
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-    // Usa monthYear e expenseId na URL
     this.http
-      .get(
+      .get<any>(
         `${environmentDev.apiUrl}/expenses/${this.monthYear}/${this.expenseId}`,
         { headers }
       )
@@ -85,10 +84,24 @@ export class EditarDespesas implements OnInit {
         })
       )
       .subscribe({
-        next: (expense: any) => {
-          expense.dateExpense = new Date(expense.dateExpense);
-          expense.valueExpense = this.formatarParaReal(expense.valueExpense);
-          this.expenseForm.patchValue(expense);
+        next: (response: any) => {
+          const expense = response.data;
+
+          // Converter para objeto Date tratando fuso horário local
+          let dateValue: Date | null = null;
+          if (expense.dateExpense) {
+            // Adiciona 'T00:00:00' para forçar a interpretação no fuso local
+            const dateStr = expense.dateExpense.split('T')[0];
+            dateValue = new Date(`${dateStr}T00:00:00`);
+          }
+
+          const formattedExpense = {
+            ...expense,
+            dateExpense: dateValue, // Passa o objeto Date exigido pelo PrimeNG
+            valueExpense: this.formatarParaReal(expense.valueExpense),
+          };
+
+          this.expenseForm.patchValue(formattedExpense);
         },
       });
   }

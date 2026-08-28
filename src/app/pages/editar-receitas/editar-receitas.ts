@@ -68,9 +68,8 @@ export class EditarReceitas implements OnInit {
       Authorization: `Bearer ${token}`,
     });
 
-    // Usa monthYear e revenueId na URL
     this.http
-      .get(
+      .get<any>(
         `${environmentDev.apiUrl}/revenues/${this.monthYear}/${this.revenueId}`,
         { headers }
       )
@@ -88,9 +87,24 @@ export class EditarReceitas implements OnInit {
         })
       )
       .subscribe({
-        next: (revenue: any) => {
-          revenue.dateRevenue = new Date(revenue.dateRevenue);
-          this.revenueForm.patchValue(revenue);
+        next: (response: any) => {
+          // Acessa o objeto real envelopado em response.data
+          const revenue = response.data;
+
+          // Trata a data para a instância de Date local aceita pelo PrimeNG
+          let dateValue: Date | null = null;
+          if (revenue.dateRevenue) {
+            const dateStr = revenue.dateRevenue.split('T')[0];
+            dateValue = new Date(`${dateStr}T00:00:00`);
+          }
+
+          const formattedRevenue = {
+            ...revenue,
+            dateRevenue: dateValue,
+            valueRevenue: this.formatarParaReal(revenue.valueRevenue),
+          };
+
+          this.revenueForm.patchValue(formattedRevenue);
         },
       });
   }
@@ -186,6 +200,13 @@ export class EditarReceitas implements OnInit {
       minimumFractionDigits: 2,
     }).format(numericValue);
     inputElement.value = formattedValue;
+  }
+
+  formatarParaReal(valor: number): string {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(valor);
   }
 
   voltarParaHome() {

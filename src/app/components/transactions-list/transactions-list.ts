@@ -65,15 +65,19 @@ export class TransactionsList implements OnInit {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     this.http
-      .get<any[]>(`${environmentDev.apiUrl}/expenses`, { headers })
+      .get<any>(`${environmentDev.apiUrl}/expenses`, { headers })
       .subscribe({
-        next: (data) => {
-          this.allExpenses = data.map((exp) => ({
+        next: (response) => {
+          // Acessa a propriedade .data do objeto retornado pela API
+          const expensesArray = response.data || [];
+
+          this.allExpenses = expensesArray.map((exp: any) => ({
             ...exp,
             id: exp.id || exp._id,
             dateExpense: new Date(exp.dateExpense),
             isPaid: exp.isPaid || false,
           }));
+
           this.applyFilter();
         },
         error: (err) => {
@@ -131,10 +135,11 @@ export class TransactionsList implements OnInit {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     this.http
-      .get<any[]>(`${environmentDev.apiUrl}/revenues`, { headers })
+      .get<any>(`${environmentDev.apiUrl}/revenues`, { headers })
       .subscribe({
-        next: (data) => {
-          this.allRevenues = data.map((exp) => ({
+        next: (response) => {
+          const revenuesArray = response.data || [];
+          this.allRevenues = revenuesArray.map((exp: any) => ({
             ...exp,
             id: exp.id || exp._id,
             dateRevenue: new Date(exp.dateRevenue),
@@ -411,12 +416,12 @@ export class TransactionsList implements OnInit {
 
   toTooltip(valueExpense: number): string {
     if (valueExpense == null) return '';
-  
+
     const formattedValue = new Intl.NumberFormat('pt-BR', {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     }).format(valueExpense);
-  
+
     return `R$ ${formattedValue}`;
   }
 }

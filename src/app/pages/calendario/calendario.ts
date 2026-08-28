@@ -80,21 +80,24 @@ export class Calendario implements OnInit {
     }
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     forkJoin({
-      expenses: this.http.get<any[]>(`${environmentDev.apiUrl}/expenses`, {
+      expenses: this.http.get<any>(`${environmentDev.apiUrl}/expenses`, {
         headers,
       }),
-      revenues: this.http.get<any[]>(`${environmentDev.apiUrl}/revenues`, {
+      revenues: this.http.get<any>(`${environmentDev.apiUrl}/revenues`, {
         headers,
       }),
     }).subscribe({
       next: (results) => {
-        const expenseEvents = results.expenses.map((exp) => ({
+        const expensesArray = results.expenses.data || [];
+        const revenuesArray = results.revenues.data || [];
+
+        const expenseEvents = expensesArray.map((exp: any) => ({
           title: exp.nameExpense,
           start: new Date(exp.dateExpense),
           color: '#EF4444',
         }));
 
-        const revenueEvents = results.revenues.map((rev) => ({
+        const revenueEvents = revenuesArray.map((rev: any) => ({
           title: rev.nameRevenue,
           start: new Date(rev.dateRevenue),
           color: '#22C55E',

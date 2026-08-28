@@ -33,20 +33,23 @@ export class Grafico implements OnInit {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     forkJoin({
-      expenses: this.http.get<any[]>(`${environmentDev.apiUrl}/expenses`, {
+      expenses: this.http.get<any>(`${environmentDev.apiUrl}/expenses`, {
         headers,
       }),
-      revenues: this.http.get<any[]>(`${environmentDev.apiUrl}/revenues`, {
+      revenues: this.http.get<any>(`${environmentDev.apiUrl}/revenues`, {
         headers,
       }),
     }).subscribe({
       next: (results) => {
-        this.allExpenses = results.expenses.map((exp) => ({
+        const expensesArray = results.expenses.data || [];
+        const revenuesArray = results.revenues.data || [];
+
+        this.allExpenses = expensesArray.map((exp: any) => ({
           ...exp,
           id: exp.id || exp._id,
           dateExpense: new Date(exp.dateExpense),
         }));
-        this.allRevenues = results.revenues.map((rev) => ({
+        this.allRevenues = revenuesArray.map((rev: any) => ({
           ...rev,
           id: rev.id || rev._id,
           dateRevenue: new Date(rev.dateRevenue),
