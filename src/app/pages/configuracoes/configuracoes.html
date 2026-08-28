@@ -5,6 +5,27 @@
     <h1>Configurações</h1>
 
     <form [formGroup]="userForm" (ngSubmit)="onUpdate()">
+      <!-- CAMPO DE SELEÇÃO DE TEMA -->
+      <div class="field">
+        <select
+          pInputText
+          formControlName="theme"
+          (change)="onThemeChange($event)"
+          style="
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+          "
+        >
+          <option value="light">Padrão (Light)</option>
+          <option value="dark-mode">Dark Mode (Clássico)</option>
+          <option value="dark-modern">Dark Modern</option>
+          <option value="midnight-cyber">Midnight Cyber</option>
+          <option value="soft-dark">Soft Dark</option>
+        </select>
+      </div>
+
       <div class="input-with-edit-button">
         <div class="field">
           <input

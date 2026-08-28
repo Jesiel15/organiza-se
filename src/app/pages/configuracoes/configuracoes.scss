@@ -19,9 +19,8 @@
       color: var(--color-white);
 
       &:hover {
-        background-color: rgba(var(--color-red-rgb), 0.7);
-        border-color: rgba(var(--color-red-rgb), 0.5);
-        color: var(--color-black);
+        opacity: 0.85;
+        color: var(--color-white);
       }
     }
   }
@@ -44,9 +43,10 @@ h1 {
   width: 2.4rem;
   height: 2em;
   margin-top: 5px;
+
   &:hover {
-    color: var(--color-black);
-    background-color: rgba(var(--color-green-rgb), 0.5);
+    color: var(--color-sky-blue);
+    background-color: var(--color-sky-blue-suave);
   }
 }
 
@@ -56,57 +56,58 @@ h1 {
   margin-bottom: 15px;
 }
 
-input[pInputText],
-textarea[pInputTextarea],
-.p-colorpicker-trigger {
-  flex-grow: 1;
-  margin-left: 8px;
-  padding: 0.75rem 0.75rem;
-  border: 1px solid #ced4da;
-  border-radius: 6px;
-  font-size: 1rem;
-  color: #495057;
-  background-color: #ffffff;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  margin-left: 0;
-
-  &:focus {
-    border-color: var(--primary-color, #6366f1);
-    box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
-    outline: 0 none;
-  }
-}
-
 .btn-adicionar {
   width: 100%;
   max-width: 300px;
   margin-bottom: 1rem;
   background-color: var(--color-neon-green);
   border-color: var(--color-neon-green);
-  color: var(--color-white);
+  color: #ffffff;
 }
 
+/* OVERRIDE GLOBAL DO PRIMENG E INPUTS NATIVOS (FORÇA AS CORES DO TEMA ATIVO) */
 ::ng-deep {
-  .p-inputtext {
-    flex-grow: 1;
-    padding: 0.75rem 0.75rem;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    font-size: 1rem;
-    color: #495057;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    margin-left: 0;
+  /* 1. INPUTS E SELECTS EM ESTADO NORMAL (HABILITADO) */
+  .p-inputtext,
+  select[pInputText],
+  input[pInputText] {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0.75rem !important;
+    border-radius: 6px !important;
+    font-size: 1rem !important;
+    font-family: inherit !important;
+    
+    /* Usa as variáveis do tema selecionado no styles.scss */
+    background-color: var(--color-white) !important;
+    color: var(--color-black) !important;
+    border: var(--line-color) !important;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 
     &:focus {
-      border-color: var(--primary-color, #6366f1) !important;
-      box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25) !important;
-      outline: 0 none;
+      border-color: var(--color-sky-blue) !important;
+      box-shadow: 0 0 0 0.2rem rgba(55, 124, 200, 0.25) !important;
+      outline: 0 none !important;
     }
   }
 
+  /* 2. OPÇÕES DO SELECT DROPDOWN */
+  select[pInputText] option {
+    background-color: var(--color-white) !important;
+    color: var(--color-black) !important;
+  }
+
+  /* 3. INPUTS E SELECTS DESABILITADOS (COMPATIBILIDADE VISUAL INTEGRAL) */
+  .p-inputtext:disabled,
+  select[pInputText]:disabled,
   input[pInputText]:disabled {
-    color: #a0a0a0;
-    background-color: #f0f0f0;
-    border-color: #e0e0e0;
+    background-color: var(--color-sky-blue-suave) !important;
+    color: var(--color-gray) !important;
+    border: var(--line-color) !important;
+    opacity: 0.75 !important;
+    cursor: not-allowed !important;
   }
 }

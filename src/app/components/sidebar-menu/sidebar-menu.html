@@ -7,26 +7,6 @@
 
   <div class="suporte"></div>
 
-  <div class="theme-toggle-container">
-    <div class="dark-mode-switch-v2">
-      <input
-        type="checkbox"
-        id="darkModeToggle"
-        [checked]="isDarkMode"
-        (change)="toggleTheme()"
-      />
-      <label for="darkModeToggle" class="switch-slider">
-        <i
-          class="pi theme-handle-icon"
-          [class.pi-sun]="!isDarkMode"
-          [class.pi-moon]="isDarkMode"
-        ></i>
-
-        <i class="pi pi-sun theme-background-icon light-mode-bg-icon"></i>
-        <i class="pi pi-moon theme-background-icon dark-mode-bg-icon"></i>
-      </label>
-    </div>
-  </div>
   <nav>
     <ul>
       <li

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
@@ -19,7 +20,9 @@ export class Configuracoes implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.userForm = this.fb.group({
       nameUser: [{ value: '', disabled: true }, [Validators.required]],
@@ -33,11 +36,48 @@ export class Configuracoes implements OnInit {
         { value: '', disabled: true },
         [Validators.required],
       ],
+      theme: ['light'], // Campo reativo para o tema
     });
   }
 
   ngOnInit(): void {
     this.loadUserData();
+    this.loadTheme();
+  }
+
+  // Carrega tema salvo do LocalStorage ao abrir a página
+  private loadTheme(): void {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    this.userForm.get('theme')?.setValue(savedTheme, { emitEvent: false });
+    this.applyThemeClass(savedTheme);
+  }
+
+  // Handler acionado quando o usuário altera a seleção no <select>
+  onThemeChange(event: Event): void {
+    const selectedTheme = (event.target as HTMLSelectElement).value;
+    if (selectedTheme) {
+      localStorage.setItem('theme', selectedTheme);
+      this.applyThemeClass(selectedTheme);
+    }
+  }
+
+  // Troca a classe no <body>
+  private applyThemeClass(themeValue: string): void {
+    const body = this.document.body;
+    const availableThemes = [
+      'dark-mode',
+      'dark-modern',
+      'midnight-cyber',
+      'soft-dark',
+    ];
+
+    // Remove todas as classes antigas de tema do body
+    availableThemes.forEach((t) => this.renderer.removeClass(body, t));
+
+    // Se o tema selecionado não for light, adiciona a classe correspondente
+    if (themeValue && themeValue !== 'light') {
+      this.renderer.addClass(body, themeValue);
+    }
   }
 
   onUpdate() {
@@ -61,9 +101,7 @@ export class Configuracoes implements OnInit {
     const nameEnabled = nameControl?.enabled;
     const emailEnabled = emailControl?.enabled;
 
-    // VERIFICA SE PELO MENOS UM DOS CAMPOS (NOME/EMAIL) ESTÁ HABILITADO
     if (nameEnabled || emailEnabled) {
-      // Se estiver habilitado, verificamos se os valores são válidos
       const isNameValid =
         !nameEnabled ||
         (nameControl?.value.trim().length > 0 && nameControl.valid);
@@ -74,7 +112,6 @@ export class Configuracoes implements OnInit {
       if (isNameValid && isEmailValid) {
         updateSent = true;
         const payload: any = {};
-        // Adiciona apenas os valores que foram habilitados
         if (nameEnabled) {
           payload.name = nameControl?.value;
         }
@@ -82,7 +119,6 @@ export class Configuracoes implements OnInit {
           payload.email = emailControl?.value;
         }
 
-        // A requisição só é enviada se houver pelo menos um campo habilitado E com valor
         if (Object.keys(payload).length > 0) {
           this.http
             .patch<any>(`${environmentDev.apiUrl}/user/emailname`, payload, {
@@ -92,7 +128,6 @@ export class Configuracoes implements OnInit {
               next: (response) => {
                 alert('Perfil atualizado com sucesso! (Nome/Email)');
 
-                // Salva novo token no localStorage
                 if (response.token) {
                   localStorage.setItem('token', response.token);
                 }
@@ -120,7 +155,6 @@ export class Configuracoes implements OnInit {
     const newPasswordControl = this.userForm.get('newPasswordUser');
     const confirmPasswordControl = this.userForm.get('confirmPasswordUser');
 
-    // VERIFICA SE PELO MENOS O CAMPO DA SENHA ATUAL ESTÁ HABILITADO
     if (passwordControl?.enabled) {
       if (
         passwordControl.valid &&
@@ -163,7 +197,7 @@ export class Configuracoes implements OnInit {
           });
       } else {
         alert('Preencha corretamente os três campos de senha.');
-        return; // Interrompe se a validação de senha falhar
+        return;
       }
     }
 
